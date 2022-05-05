@@ -1,7 +1,6 @@
 import { Card } from 'react-bootstrap'
 import Link from 'next/link'
 
-//Post()の引数のところにAPIのレスポンスのデータ入れて{}で渡したらOKそう
 export default function Post(props) {
   const json = props.result.Post;
 
@@ -9,7 +8,6 @@ export default function Post(props) {
     <li>
       {json.map(post => (
         <Card style={{ width: '40rem' }}>
-          {/* {if(class=){ }} */}
           <Link href="./userPosts">
             rio
           </Link>
