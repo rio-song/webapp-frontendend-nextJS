@@ -3,6 +3,7 @@ import Layout, { siteTitle } from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
 import Post from './post'
 import { useState, useEffect } from 'react'
+import PostDetail from './postDetail'
 
 export default function Home() {
   const [result, setResult] = useState();
@@ -15,8 +16,24 @@ export default function Home() {
     fetchData();
   }, []);
 
+  //詳細画面に遷移
+  const [postDetailShow, setPostDetailShow] = useState(false);
+  const [id, setId] = useState("");
+
+  const [postDetailResult, setPostDetailResult] = useState(null);
+
+  useEffect(() => {
+    console.log("呼び出し１")
+    async function fetchData() {
+      const postDetailResult = await getPostDetail(id);
+      setPostDetailResult(postDetailResult);
+    }
+    fetchData();
+    console.log("呼び出し２")
+  }, []);
+
   return (
-    <Layout>
+    <Layout home>
       <Head>
         <title>{siteTitle}</title>
       </Head>
@@ -24,8 +41,9 @@ export default function Home() {
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <ul className={utilStyles.list}>
-          {result && <Post result={result} />}
+          {result && <Post result={result} setPostDetailShow={setPostDetailShow} setId={setId} />}
         </ul>
+        {postDetailResult && <PostDetail postDetailResult={postDetailResult} postDetailShow={postDetailShow} setPostDetailShow={setPostDetailShow} id={id} />}
       </section>
     </Layout>
   )
@@ -45,5 +63,14 @@ async function getPosts() {
   const params = { method: "GET" };
   const response = await fetch(url, params);
   const posts = await response.json()
+  return posts
+}
+
+async function getPostDetail(id) {
+  const url = "http://localhost:8000/api/post/postId/" + id;
+  const params = { method: "GET" };
+  const response = await fetch(url, params);
+  const posts = await response.json()
+  console.log("呼び出し３")
   return posts
 }
