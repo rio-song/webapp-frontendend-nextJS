@@ -1,14 +1,22 @@
 import Head from 'next/head'
 import Layout, { siteTitle } from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
-import { getSortedPostsData } from '../lib/posts'
 import Post from './post'
-import { post } from 'cypress/types/jquery'
-export default function Home({ allPostsData, post }) {
-  console.log("なぜ")
-  const result = getPosts()
+import { useState, useEffect } from 'react'
+
+export default function Home() {
+  const [result, setResult] = useState();
+
+  useEffect(() => {
+    async function fetchData() {
+      const result = await getPosts();
+      setResult(result);
+    }
+    fetchData();
+  }, []);
+
   return (
-    <Layout home>
+    <Layout>
       <Head>
         <title>{siteTitle}</title>
       </Head>
@@ -16,8 +24,7 @@ export default function Home({ allPostsData, post }) {
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <ul className={utilStyles.list}>
-          <Post result={result}>
-          </Post>
+          {result && <Post result={result} />}
         </ul>
       </section>
     </Layout>
@@ -38,8 +45,5 @@ async function getPosts() {
   const params = { method: "GET" };
   const response = await fetch(url, params);
   const posts = await response.json()
-  console.log("通信確認1" + response)
-  console.log("通信確認2" + Object.values(JSON.stringify(posts)))
-  console.log("通信確認3" + JSON.parse(JSON.stringify(posts)))
-  return JSON.stringify(posts)
+  return posts
 }
