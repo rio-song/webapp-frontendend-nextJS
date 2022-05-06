@@ -18,19 +18,10 @@ export default function Home() {
 
   //詳細画面に遷移
   const [postDetailShow, setPostDetailShow] = useState(false);
-  const [id, setId] = useState("");
 
   const [postDetailResult, setPostDetailResult] = useState(null);
+  console.log("中身何" + postDetailShow)
 
-  useEffect(() => {
-    console.log("呼び出し１")
-    async function fetchData() {
-      const postDetailResult = await getPostDetail(id);
-      setPostDetailResult(postDetailResult);
-    }
-    fetchData();
-    console.log("呼び出し２")
-  }, []);
 
   return (
     <Layout home>
@@ -41,36 +32,23 @@ export default function Home() {
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <ul className={utilStyles.list}>
-          {result && <Post result={result} setPostDetailShow={setPostDetailShow} setId={setId} />}
+          {result && <Post result={result} setPostDetailShow={setPostDetailShow}
+            setPostDetailResult={setPostDetailResult} />}
         </ul>
-        {postDetailResult && <PostDetail postDetailResult={postDetailResult} postDetailShow={postDetailShow} setPostDetailShow={setPostDetailShow} id={id} />}
+        {postDetailResult && <PostDetail postDetailResult={postDetailResult}
+          postDetailShow={postDetailShow} setPostDetailShow={setPostDetailShow} />}
       </section>
     </Layout>
   )
 }
 
-// export async function getStaticProps() {
-//   const allPostsData = getSortedPostsData()
-//   return {
-//     props: {
-//       allPostsData
-//     }
-//   }
-// }
 
 async function getPosts() {
   const url = "http://localhost:8000/api/post?count=5&lastPostId=null";
   const params = { method: "GET" };
   const response = await fetch(url, params);
   const posts = await response.json()
+  console.log("挙動確認" + posts)
   return posts
 }
 
-async function getPostDetail(id) {
-  const url = "http://localhost:8000/api/post/postId/" + id;
-  const params = { method: "GET" };
-  const response = await fetch(url, params);
-  const posts = await response.json()
-  console.log("呼び出し３")
-  return posts
-}
