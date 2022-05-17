@@ -31,12 +31,3 @@ export default function PostDetail(props) {
         </Modal>
     );
 }
-async function getPostDetail(id) {
-    const url = "http://localhost:8000/api/post/postId/" + id;
-    const params = { method: "GET" };
-    const response = await fetch(url, params);
-    const posts = await response.json()
-    console.log("呼び出し３")
-    console.log("挙動確認" + posts)
-    return posts
-}

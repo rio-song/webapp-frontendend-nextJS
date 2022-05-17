@@ -6,22 +6,25 @@ import { useState, useEffect } from 'react'
 import PostDetail from './postDetail'
 
 export default function Home() {
+  //各Postの表示
   const [result, setResult] = useState();
+  //詳細画面の表示
+  const [postDetailShow, setPostDetailShow] = useState(false);
+  const [postDetailResult, setPostDetailResult] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
-      const result = await getPosts();
-      setResult(result);
+      const token = localStorage.getItem('token')
+      if (token !== null) {
+        const result = await getPostsLogin();
+        setResult(result);
+      } else {
+        const result = await getPosts();
+        setResult(result);
+      }
     }
     fetchData();
   }, []);
-
-  //詳細画面に遷移
-  const [postDetailShow, setPostDetailShow] = useState(false);
-
-  const [postDetailResult, setPostDetailResult] = useState(null);
-  console.log("中身何" + postDetailShow)
-
 
   return (
     <Layout home>
@@ -44,11 +47,32 @@ export default function Home() {
 
 
 async function getPosts() {
-  const url = "http://localhost:8000/api/post?count=5&lastPostId=null";
-  const params = { method: "GET" };
+  const url = "http://localhost:8000/api/post?count=5&lastPostId=null/userId/";
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      // 'Access-Control-Allow-Origin': 'http://localhost:8000'
+    },
+  };
   const response = await fetch(url, params);
   const posts = await response.json()
-  console.log("挙動確認" + posts)
   return posts
 }
 
+async function getPostsLogin() {
+  const userId = localStorage.getItem('userId')
+
+  const url = "http://localhost:8000/api/post?count=5&lastPostId=null/userId/" + userId;
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "token": localStorage.getItem('token'),
+      // 'Access-Control-Allow-Origin': 'http://localhost:8000'
+    },
+  };
+  const response = await fetch(url, params);
+  const posts = await response.json()
+  return posts
+}

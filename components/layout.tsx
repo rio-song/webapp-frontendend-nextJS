@@ -3,21 +3,46 @@ import Image from 'next/image'
 import styles from './layout.module.css'
 import utilStyles from '../styles/utils.module.css'
 import Link from 'next/link'
-import { Navbar, Container, Nav, NavDropdown, Form, FormControl, Button, Modal } from 'react-bootstrap'
+import { Navbar, Container, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import EditProfile from "../pages/editProfile"
 import RegisterPostImage from '../pages/registerPostImage'
+import LoginPage from '../pages/loginPage'
+import ResisterUser from '../pages/registerUser'
+import { AiOutlineSearch } from 'react-icons/ai';
 
-const name = '[Your Name]'
-export const siteTitle = 'Next.js Sample Website'
+const name = 'App'
+export const siteTitle = 'App'
 
-export default function Layout({ children, home, userPost }) {
+export default function Layout({ children, home }) {
   const [profileShow, setPlofileShow] = useState(false);
   const handleProfileShow = () => setPlofileShow(true);
 
   const [registerImageShow, setRegisterImageShow] = useState(false);
   const handleRegisterImageShow = () => setRegisterImageShow(true);
+
+  const [loginStatus, setLoginStatus] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token !== null) {
+      setLoginStatus(true);
+    }
+  }, [])
+  const [loginPopShow, setLoginPopShow] = useState(false);
+  const handleLogin = () => setLoginPopShow(true)
+
+  const [resisterUserPopShow, setResisterUserPopShow] = useState(false);
+
+  const logout = () => {
+    async function fetchData() {
+      const login = await Logout();
+    }
+    fetchData()
+    localStorage.clear()
+    setLoginStatus(false);
+  }
 
   return (
     <div className={styles.container}>
@@ -44,7 +69,6 @@ export default function Layout({ children, home, userPost }) {
       <Navbar bg="light" expand="lg" fixed="top">
         <Container>
           <Navbar.Brand href="#home">App</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Form className="d-flex">
             <FormControl
               type="search"
@@ -52,18 +76,24 @@ export default function Layout({ children, home, userPost }) {
               className="me-2"
               aria-label="Search"
             />
-            <Button variant="outline-success" >Search</Button>
+            <Button variant="outline-success" ><AiOutlineSearch /></Button>
           </Form>
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <NavDropdown title="マイページ" id="basic-nav-dropdown" >
-                <NavDropdown.Item onClick={handleRegisterImageShow}>投稿する</NavDropdown.Item>
-                <NavDropdown.Item onClick={handleProfileShow}>プロフィールの編集</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">ログアウト</NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-          </Navbar.Collapse>
+          {loginStatus ? (
+            <>
+              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="me-auto">
+                  <NavDropdown title="マイページ" id="basic-nav-dropdown" >
+                    <NavDropdown.Item onClick={handleRegisterImageShow}>投稿する</NavDropdown.Item>
+                    <NavDropdown.Item onClick={handleProfileShow}>プロフィールの編集</NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item onClick={logout}>ログアウト</NavDropdown.Item>
+                  </NavDropdown>
+                </Nav>
+              </Navbar.Collapse>
+            </>) : (
+            <Button onClick={handleLogin}>ログイン</Button>
+          )}
         </Container>
       </Navbar>
       <header className={styles.header}>
@@ -92,16 +122,51 @@ export default function Layout({ children, home, userPost }) {
           </>
         )}
       </header>
-      <EditProfile profileShow={profileShow} setprofileShow={setPlofileShow}></EditProfile>
-      <RegisterPostImage registerImageShow={registerImageShow} setRegisterImageShow={setRegisterImageShow}></RegisterPostImage>
+      <EditProfile
+        profileShow={profileShow}
+        setprofileShow={setPlofileShow}></EditProfile>
+      <RegisterPostImage
+        registerImageShow={registerImageShow}
+        setRegisterImageShow={setRegisterImageShow}></RegisterPostImage>
+      <LoginPage
+        loginPopShow={loginPopShow}
+        setLoginPopShow={setLoginPopShow}
+        setResisterUserPopShow={setResisterUserPopShow}
+        setLoginStatus={setLoginStatus}
+      >
+      </LoginPage>
+      <ResisterUser
+        resisterUserPopShow={resisterUserPopShow}
+        setResisterUserPopShow={setResisterUserPopShow}
+        setLoginStatus={setLoginStatus}></ResisterUser>
       <main>{children}</main>
-      {!home && (
-        <div className={styles.backToHome}>
-          <Link href="/">
-            <a>← Back to home</a>
-          </Link>
-        </div>
-      )}
-    </div>
+      {
+        !home && (
+          <div className={styles.backToHome}>
+            <Link href="/">
+              <a>戻る</a>
+            </Link>
+          </div>
+        )
+      }
+    </div >
   )
+}
+
+
+async function Logout() {
+  const url = "http://localhost:8000/api/logout";
+
+  const request = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      // "token": localStorage.getItem('token'),
+      //  'Access-Control-Allow-Origin': 'http://localhost:8000'
+    },
+
+  }
+  const response = await fetch(url, request);
+  const posts = await response.status
+  return posts
 }

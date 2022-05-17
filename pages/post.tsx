@@ -9,6 +9,12 @@ export default function Post(props) {
 
   //お気に入り
   const [favo, setFavo] = useState(true);
+  if (json.favoStatus === true) {
+    setFavo(true)
+  } else {
+    setFavo(false)
+  }
+
   const hundlefavo = (id) => {
     postFavo(id)
     setFavo(false)
@@ -54,15 +60,16 @@ export default function Post(props) {
 }
 
 async function postFavo(id) {
-
-  const url = "http://localhost:8000/api/favo/postId/" + id + "/userId/1234567";
+  const userId = localStorage.getItem('userId')
+  const url = "http://localhost:8000/api/favo/postId/" + id + "/userId/" + userId;
 
   const request = {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      //'Access-Control-Allow-Origin': 'http://localhost:8000'
-    }
+      "token": localStorage.getItem('token'),
+      // 'Access-Control-Allow-Origin': 'http://localhost:8000'
+    },
   }
 
 
@@ -74,13 +81,15 @@ async function postFavo(id) {
 
 async function deleteFavo(id) {
 
-  const url = "http://localhost:8000/api/favo/postId/" + id + "/userId/1234567";
+  const userId = localStorage.getItem('userId')
+  const url = "http://localhost:8000/api/favo/postId/" + id + "/userId/" + userId;
 
   const request = {
     method: "DELETE",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      'Access-Control-Allow-Origin': 'http://localhost:8000'
+      "token": localStorage.getItem('token'),
+      // 'Access-Control-Allow-Origin': 'http://localhost:8000'
     },
   }
 
@@ -91,11 +100,19 @@ async function deleteFavo(id) {
 }
 
 async function getPostDetail(id) {
-  const url = "http://localhost:8000/api/post/postId/" + id;
-  const params = { method: "GET" };
+
+  const userId = localStorage.getItem('userId')
+
+  const url = "http://localhost:8000/api/post/postId/" + id + "/userId/" + userId;
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "token": localStorage.getItem('token'),
+      // 'Access-Control-Allow-Origin': 'http://localhost:8000'
+    },
+  };
   const response = await fetch(url, params);
   const posts = await response.json()
-  console.log("呼び出し３")
-  console.log("挙動確認" + posts)
   return posts
 }

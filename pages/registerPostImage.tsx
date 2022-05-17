@@ -1,4 +1,4 @@
-import { Button, Modal, Container, Row, Col, Form } from 'react-bootstrap'
+import { Button, Modal, Row, Col, Form } from 'react-bootstrap'
 import { useState, useRef } from 'react';
 
 
@@ -19,14 +19,15 @@ export default function RegisterPostImage(props) {
         setPreview('');
     };
     //Imgの投稿
-    const titleRef = useRef();
-    const commentRef = useRef();
+    const titleRef = useRef(null);
+    const commentRef = useRef(null);
     //結果の表示
     const [result, setResult] = useState("");
 
-    const getPostInfo = event => {
-        event.preventDefault();
-        const result = PostImage(preview, titleRef, commentRef);
+    const getPostInfo = () => {
+        //event.preventDefault();
+
+        const result = PostImage(preview, titleRef.current.value, commentRef.current.value);
         if (result) {
             //200と201以外を救うという書き方に変えたい
             setResult("投稿しました")
@@ -52,15 +53,15 @@ export default function RegisterPostImage(props) {
                             <img src={preview} />
                         </Col>
                         <Col xs={6} md={4}>
-                            <Form  >
+                            <Form >
                                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                                    <Form.Label id='title'>タイトル</Form.Label>
-                                    <Form.Control ref={titleRef} />
+                                    <Form.Label name="title" >タイトル</Form.Label>
+                                    <input ref={titleRef} type="text" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                                    <Form.Label id='comment'>コメント</Form.Label>
-                                    <Form.Control as="textarea" rows={3} ref={commentRef} />
+                                    <Form.Label name="comment">コメント</Form.Label>
+                                    <Form.Control as="textarea" ref={commentRef} rows={3} />
                                 </Form.Group>
                                 <Button variant="outline-primary" onClick={handleChangeFileAgain}>戻る</Button>
                                 <Button variant="primary" onClick={getPostInfo}>
@@ -89,13 +90,15 @@ async function PostImage(_imgUrl, _title, _comment) {
     params.append('title', _title)
     params.append('text', _comment)
 
-    const url = "http://localhost:8000/api/post/userId/1234567";
+    const userId = localStorage.getItem('userId')
+    const url = "http://localhost:8000/api/post/userId/" + userId;
 
     const request = {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
-            'Access-Control-Allow-Origin': 'http://localhost:8000'
+            "token": localStorage.getItem('token'),
+            // 'Access-Control-Allow-Origin': 'http://localhost:8000'
         },
         body: params
     }
