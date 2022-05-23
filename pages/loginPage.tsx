@@ -1,10 +1,19 @@
 import { Button, Modal, Form } from 'react-bootstrap'
 import { useRef } from 'react';
+import { Login } from '../type/api';
+import { useState } from 'react'
 
 export default function LoginPage(props) {
 
+    const [statusCode, setStatusCode] = useState();
+    const [isError, setIsError] = useState(false);
+    const [errorContent, setErrorContent] = useState("");
+
     const show = props.loginPopShow;
-    const handleClose = () => { props.setLoginPopShow(false) };
+    const handleClose = () => {
+        props.setLoginPopShow(false)
+        setIsError(false)
+    };
     const handleResisterUser = () => {
         props.setLoginPopShow(false);
         props.setResisterUserPopShow(true);
@@ -15,13 +24,18 @@ export default function LoginPage(props) {
     const login = () => {
 
         async function fetchData() {
-            const login = await Login(passwordRef.current.value, emailRef.current.value);
-            localStorage.setItem('token', login.Login.token);
-            localStorage.setItem('userId', login.Login.userId);
+            const result = await Login(emailRef.current.value, passwordRef.current.value, setStatusCode);
+            if (statusCode === 200 || statusCode === 201) {
+                localStorage.setItem('token', result.Login.token);
+                localStorage.setItem('userId', result.Login.userId);
+                props.setLoginPopShow(false);
+                props.setLoginStatus(true);
+            } else {
+                setIsError(true);
+                setErrorContent(result.message);
+            }
         }
         fetchData()
-        props.setLoginPopShow(false);
-        props.setLoginStatus(true);
     }
 
 
@@ -54,6 +68,8 @@ export default function LoginPage(props) {
                         />
                     </Form.Group>
                 </Form>
+                {isError ? (errorContent) : (<></>)}
+                <br></br>
                 <Button onClick={handleResisterUser}>
                     <a>新規登録</a>
                 </Button>
@@ -65,24 +81,4 @@ export default function LoginPage(props) {
             </Modal.Footer>
         </Modal >
     );
-}
-async function Login(email, password) {
-
-    var SHA256 = require("crypto-js/sha256");
-    const hash = SHA256(password).toString();
-
-    const url = "http://localhost:8000/api/login?email=" + email + "&password=" + hash;
-
-    const request = {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            //  'Access-Control-Allow-Origin': 'http://localhost:8000'
-        },
-    }
-
-    const response = await fetch(url, request);
-    const posts = await response.json()
-
-    return posts
 }
