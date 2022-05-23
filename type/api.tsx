@@ -50,10 +50,16 @@ export async function Login(email, password, setStatusCode) {
 
     const response = await fetch(url, request);
 
-    setStatusCode(response.status);
-    const body = response.json();
-    return body
-
+    const body = await response.json();
+    const statusCode = response.status
+    setStatusCode(statusCode);
+    if (statusCode === 200 || statusCode === 201) {
+        localStorage.setItem('token', body.Login.token);
+        localStorage.setItem('userId', body.Login.userId);
+        return body.Login
+    } else {
+        return body.message
+    }
 }
 
 export async function Logout() {

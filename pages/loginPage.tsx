@@ -1,11 +1,12 @@
 import { Button, Modal, Form } from 'react-bootstrap'
 import { useRef } from 'react';
 import { Login } from '../type/api';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function LoginPage(props) {
 
     const [statusCode, setStatusCode] = useState();
+    const [result, setResult] = useState();
     const [isError, setIsError] = useState(false);
     const [errorContent, setErrorContent] = useState("");
 
@@ -25,18 +26,22 @@ export default function LoginPage(props) {
 
         async function fetchData() {
             const result = await Login(emailRef.current.value, passwordRef.current.value, setStatusCode);
-            if (statusCode === 200 || statusCode === 201) {
-                localStorage.setItem('token', result.Login.token);
-                localStorage.setItem('userId', result.Login.userId);
-                props.setLoginPopShow(false);
-                props.setLoginStatus(true);
-            } else {
-                setIsError(true);
-                setErrorContent(result.message);
-            }
+            setResult(result);
+            return result
         }
         fetchData()
     }
+
+    useEffect(() => {
+        if (result && (statusCode === 200 || statusCode === 201)) {
+            props.setLoginPopShow(false);
+            props.setLoginStatus(true);
+        } else {
+            setIsError(true);
+            setErrorContent(result);
+        }
+    }, [statusCode, result])
+
 
 
     return (
