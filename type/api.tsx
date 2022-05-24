@@ -1,4 +1,4 @@
-export async function registerUserInfo(familyName, firstName, nickName, email, password) {
+export async function registerUserInfo(familyName, firstName, nickName, email, password, setStatusCode) {
 
     var SHA256 = require("crypto-js/sha256");
     const hash = SHA256(password).toString();
@@ -23,8 +23,14 @@ export async function registerUserInfo(familyName, firstName, nickName, email, p
     }
 
     const response = await fetch(url, request);
-    const posts = await response.json()
-    return posts
+    const statusCode = response.status
+    setStatusCode(statusCode);
+    if (statusCode === 200 || statusCode === 201) {
+        return
+    } else {
+        const body = await response.json();
+        return body.message
+    }
 }
 
 export async function Login(email, password, setStatusCode) {
@@ -80,7 +86,7 @@ export async function Logout() {
 }
 
 
-export async function getPosts() {
+export async function getPosts(setStatusCode) {
     const url = "http://localhost:8000/api/post/userId/null?count=5&lastPostId=null";
     const params = {
         method: "GET",
@@ -90,11 +96,17 @@ export async function getPosts() {
         },
     };
     const response = await fetch(url, params);
-    const posts = await response.json()
-    return posts
+    const body = await response.json();
+    const statusCode = response.status
+    setStatusCode(statusCode);
+    if (statusCode === 200 || statusCode === 201) {
+        return body
+    } else {
+        return body.message
+    }
 }
 
-export async function getPostsLogin() {
+export async function getPostsLogin(setStatusCode) {
     const userId = localStorage.getItem('userId')
 
     const url = "http://localhost:8000/api/post/userId/" + userId + "?count=5&lastPostId=null";
@@ -107,10 +119,16 @@ export async function getPostsLogin() {
         },
     };
     const response = await fetch(url, params);
-    const posts = await response.json()
-    return posts
+    const body = await response.json();
+    const statusCode = response.status
+    setStatusCode(statusCode);
+    if (statusCode === 200 || statusCode === 201) {
+        return body
+    } else {
+        return body.message
+    }
 }
-export async function getPostDetail(id) {
+export async function getPostDetail(id, setStatusCode) {
 
     const userId = localStorage.getItem('userId')
 
@@ -124,8 +142,45 @@ export async function getPostDetail(id) {
         },
     };
     const response = await fetch(url, params);
-    const posts = await response.json()
-    return posts
+    const body = await response.json();
+    const statusCode = response.status
+    setStatusCode(statusCode);
+    if (statusCode === 200 || statusCode === 201) {
+        return body
+    } else {
+        return body.message
+    }
+}
+
+export async function PostImage(_imgUrl, _title, _comment, setStatusCode) {
+
+    const params = new URLSearchParams()
+    params.append('imageUrl', _imgUrl)
+    params.append('title', _title)
+    params.append('text', _comment)
+
+    const userId = localStorage.getItem('userId')
+    const url = "http://localhost:8000/api/post/userId/" + userId;
+
+    const request = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "token": localStorage.getItem('token'),
+            // 'Access-Control-Allow-Origin': 'http://localhost:8000'
+        },
+        body: params
+    }
+
+    const response = await fetch(url, request);
+    const statusCode = response.status
+    setStatusCode(statusCode);
+    if (statusCode === 200 || statusCode === 201) {
+        return "投稿しました"
+    } else {
+        const body = await response.json();
+        return body.message
+    }
 }
 
 export async function postFavo(id) {
@@ -140,7 +195,6 @@ export async function postFavo(id) {
             // 'Access-Control-Allow-Origin': 'http://localhost:8000'
         },
     }
-
 
     const response = await fetch(url, request);
     const posts = await response.status

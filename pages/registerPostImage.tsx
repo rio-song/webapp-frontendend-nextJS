@@ -1,14 +1,28 @@
 import { Button, Modal, Row, Col, Form } from 'react-bootstrap'
-import { useState, useRef } from 'react';
-
+import { useState, useRef, useEffect } from 'react';
+import { PostImage } from '../type/api';
 
 export default function RegisterPostImage(props) {
-    const show = props.registerImageShow;
-    const handleClose = () => { props.setRegisterImageShow(false) };
 
+    const [statusCode, setStatusCode] = useState();
+    const [result, setResult] = useState();
+    const [isError, setIsError] = useState(false);
+    const [errorContent, setErrorContent] = useState("");
+    const [successContent, setSuccessContent] = useState("");
     //Imgの選択
     const [showImg, setShow] = useState(false);
     const [preview, setPreview] = useState('');
+
+    const show = props.registerImageShow;
+    const handleClose = () => {
+        setShow(false);
+        props.setRegisterImageShow(false)
+        setIsError(false)
+        setPreview('')
+        setErrorContent('')
+        setSuccessContent('')
+    };
+
     const handleChangeFile = (e) => {
         setShow(true);
         const { files } = e.target;
@@ -17,23 +31,33 @@ export default function RegisterPostImage(props) {
     const handleChangeFileAgain = () => {
         setShow(false);
         setPreview('');
+        setErrorContent('')
+        setSuccessContent('')
     };
     //Imgの投稿
     const titleRef = useRef(null);
     const commentRef = useRef(null);
-    //結果の表示
-    const [result, setResult] = useState("");
 
     const getPostInfo = () => {
-        //event.preventDefault();
-
-        const result = PostImage(preview, titleRef.current.value, commentRef.current.value);
-        if (result) {
-            //200と201以外を救うという書き方に変えたい
-            setResult("投稿しました")
+        async function fetchData() {
+            const result = await PostImage(preview, titleRef.current.value, commentRef.current.value, setStatusCode);
+            setResult(result)
         }
+        fetchData()
     }
-
+    useEffect(() => {
+        if (statusCode === 200 || statusCode === 201) {
+            setSuccessContent(result)
+        } else if (statusCode === 400) {
+            setIsError(true);
+            setErrorContent(result);
+            localStorage.clear()
+            props.setLoginStatus(false);
+        } else {
+            setIsError(true);
+            setErrorContent(result);
+        }
+    }, [statusCode, result])
 
     return (
         <Modal show={show} onHide={handleClose}
@@ -68,7 +92,8 @@ export default function RegisterPostImage(props) {
                                     投稿
                                 </Button>
                             </Form>
-                            <p>{result}</p>
+                            <p> {isError ? (errorContent) : (<></>)}
+                                {successContent}</p>
                         </Col>
                     </Row>
                 ) : (
@@ -81,30 +106,4 @@ export default function RegisterPostImage(props) {
             </Modal.Body>
         </Modal >
     );
-}
-
-async function PostImage(_imgUrl, _title, _comment) {
-
-    const params = new URLSearchParams()
-    params.append('imageUrl', _imgUrl)
-    params.append('title', _title)
-    params.append('text', _comment)
-
-    const userId = localStorage.getItem('userId')
-    const url = "http://localhost:8000/api/post/userId/" + userId;
-
-    const request = {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "token": localStorage.getItem('token'),
-            // 'Access-Control-Allow-Origin': 'http://localhost:8000'
-        },
-        body: params
-    }
-
-    const response = await fetch(url, request);
-    const posts = await response.status
-
-    return posts
 }

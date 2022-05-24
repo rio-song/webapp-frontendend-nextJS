@@ -1,8 +1,15 @@
 import { Button, Modal, Form } from 'react-bootstrap'
 import { useRef } from 'react';
 import { registerUserInfo } from '../type/api'
+import { useState, useEffect } from 'react'
+
 
 export default function ResisterUser(props) {
+
+    const [statusCode, setStatusCode] = useState();
+    const [result, setResult] = useState();
+    const [isError, setIsError] = useState(false);
+    const [errorContent, setErrorContent] = useState("");
 
     const show = props.resisterUserPopShow;
     const handleClose = () => { props.setResisterUserPopShow(false) };
@@ -15,14 +22,23 @@ export default function ResisterUser(props) {
     const passwordRef = useRef(null);
 
     const registerUser = () => {
-        const result = registerUserInfo(familyNameRef.current.value, firstNameRef.current.value, nickNameRef.current.value, emailRef.current.value, passwordRef.current.value);
-        // if (result.statusCode = 401) {
-        //     localStorage.clear()
-        //     props.setLoginStatus(false);
-        // }
-        props.setResisterUserPopShow(false);
+        async function fetchData() {
+            const result = await registerUserInfo(familyNameRef.current.value,
+                firstNameRef.current.value, nickNameRef.current.value,
+                emailRef.current.value, passwordRef.current.value, setStatusCode);
+            setResult(result);
+        }
+        fetchData()
     }
 
+    useEffect(() => {
+        if (statusCode === 200 || statusCode === 201) {
+            props.setResisterUserPopShow(false);
+        } else {
+            setIsError(true);
+            setErrorContent(result);
+        }
+    }, [statusCode, result])
 
     return (
         < Modal show={show} onHide={handleClose} >
@@ -74,6 +90,7 @@ export default function ResisterUser(props) {
                         />
                     </Form.Group>
                 </Form>
+                {isError ? (errorContent) : (<></>)}
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="primary" onClick={registerUser}>
