@@ -50,3 +50,129 @@
 .lightText {
   color: #666;
 }
+
+.postList {
+  color: #262626;
+  /* padding: 20 20 20; */
+  margin: 50px 50px 50px;
+}
+.postImage{
+  height: 400px;
+  color: #FFFF;
+  display: block;
+  margin-left: auto;
+  margin-right: auto
+}
+.postImageArea1{
+  background: #F2F2F2;
+}
+
+.postImageArea2{
+  background: #F2F2F2;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+
+.icon{
+  margin: 0px 5px 0px;
+  color: #262626;
+}
+.text{
+  color: #262626;
+  font-size: 14px;
+  font:BlinkMacSystemFont;
+}
+.text2{
+  color: #8E8E8E;
+  font-size: 12px;
+  font:BlinkMacSystemFont;
+}
+.text3{
+  color: #262626;
+  font-size: 14px;
+  font-weight: bold;
+  font:BlinkMacSystemFont;
+}
+
+.text4{
+  color: #262626;
+  font-size: 14px;
+  font-weight: bold;
+  font:BlinkMacSystemFont;
+}
+.text5{
+  color: #8E8E8E;
+  font-size: 14px;
+  font:BlinkMacSystemFont;
+}
+
+.text6{
+  color: #8E8E8E;
+  font-size: 10px;
+  font:BlinkMacSystemFont;
+}
+.navIcons{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 
+.modal{: 1000px;
+} */
+.detailUserInfo{
+  margin: 10px 0px 0px;
+  padding-bottom: 5px;
+  border: 1px solid;
+  border-top: transparent;
+  border-left: transparent;
+  border-right: transparent;
+  border-color:#F2F2F2;
+  
+}
+
+.iconDetailMenu{
+  float: right;
+  margin: 5px 5px 0px;
+  color: #262626;
+}
+
+.detailContent{
+  padding: 0px 0px 0px;
+  margin: 0px 0px 0px;
+}
+
+.comment{
+  display: flex;
+}
+
+.commentArera{
+  overflow: scroll;
+  height:220px;
+}
+
+.favoArea{
+  border: 1px solid;
+  border-bottom: transparent;
+  border-left: transparent;
+  border-right: transparent;
+  border-color:#F2F2F2;
+
+}
+
+.addCommentArea{
+  display: flex;
+  border: 1px solid;
+  border-bottom: transparent;
+  border-left: transparent;
+  border-right: transparent;
+  border-color:#F2F2F2;
+  align-items: flex-end;
+  position: absolute;
+  bottom: 10px;
+}
+.addComment{
+  border: transparent;
+  resize: none;
+  outline: none;
+}

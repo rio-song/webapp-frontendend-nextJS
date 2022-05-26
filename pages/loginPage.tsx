@@ -23,17 +23,15 @@ export default function LoginPage(props) {
     const emailRef = useRef(null);
 
     const login = () => {
-
         async function fetchData() {
             const result = await Login(emailRef.current.value, passwordRef.current.value, setStatusCode);
             setResult(result);
-            return result
         }
         fetchData()
     }
 
     useEffect(() => {
-        if (result && (statusCode === 200 || statusCode === 201)) {
+        if (statusCode === 200 || statusCode === 201) {
             props.setLoginPopShow(false);
             props.setLoginStatus(true);
         } else {
@@ -41,8 +39,6 @@ export default function LoginPage(props) {
             setErrorContent(result);
         }
     }, [statusCode, result])
-
-
 
     return (
         < Modal show={show} onHide={handleClose} >
@@ -75,11 +71,11 @@ export default function LoginPage(props) {
                 </Form>
                 {isError ? (errorContent) : (<></>)}
                 <br></br>
+            </Modal.Body>
+            <Modal.Footer>
                 <Button onClick={handleResisterUser}>
                     <a>新規登録</a>
                 </Button>
-            </Modal.Body>
-            <Modal.Footer>
                 <Button variant="primary" onClick={login}>
                     ログイン
                 </Button>

@@ -1,10 +1,11 @@
-import Layout, { siteTitle } from '../components/layout'
+import Layout from '../components/layout'
 import NestedLayout from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
 import Post from './post'
 import { useState, useEffect } from 'react'
 import PostDetail from './postDetail'
 import { getPosts, getPostsLogin } from '../type/api'
+import { useRouter } from 'next/router';
 
 export default function Home(props) {
   //各Postの表示
@@ -20,6 +21,16 @@ export default function Home(props) {
 
   const [favos, setFavo] = useState();
   const [tapFavosIndex, setTapFavosIndex] = useState();
+
+  const router = useRouter();
+
+  const handlePagePostByUser = (userId) => {
+    router.push({
+      pathname: "/userPosts",
+      query: { userId: userId }
+    });
+
+  }
 
 
   useEffect(() => {
@@ -56,14 +67,14 @@ export default function Home(props) {
   }, [statusCode, result])
 
 
-
   return (
-    <><br></br><br></br><br></br><br></br>
+    <><br></br>
       {isError ? (errorContent) : (<>
         <ul className={utilStyles.list} >
           {result && <Post result={result} setPostDetailShow={setPostDetailShow}
             setPostDetailResult={setPostDetailResult} loginStatus={props.loginStatus}
-            favos={favos} setFavo={setFavo} setTapFavosIndex={setTapFavosIndex} />}
+            favos={favos} setFavo={setFavo} setTapFavosIndex={setTapFavosIndex}
+            handlePagePostByUser={handlePagePostByUser} />}
         </ul >
         {postDetailResult && <PostDetail postDetailResult={postDetailResult}
           postDetailShow={postDetailShow} setPostDetailShow={setPostDetailShow}
@@ -71,29 +82,6 @@ export default function Home(props) {
         } </>
       )}</>)
 }
-
-
-//   return (
-//     <>
-//       {/* <Layout home props={loginStatus, setLoginStatus} >
-//         <Head>
-//           <title>{siteTitle}</title>
-//         </Head>
-//         <section className={utilStyles.headingMd}>
-//         </section>
-//         <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}> */}
-//       <ul className={utilStyles.list}>
-//         {result && <Post result={result} setPostDetailShow={setPostDetailShow}
-//           setPostDetailResult={setPostDetailResult} />}
-//       </ul>
-//       {postDetailResult && <PostDetail postDetailResult={postDetailResult}
-//         postDetailShow={postDetailShow} setPostDetailShow={setPostDetailShow} />}
-//       {/* </section>
-//       </Layout > */}
-//     </>
-//   )
-// }
-
 
 Home.getLayout = function getLayout(home, props) {
   return (

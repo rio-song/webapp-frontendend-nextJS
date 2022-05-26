@@ -100,6 +100,9 @@ export async function getPosts(setStatusCode) {
     const statusCode = response.status
     setStatusCode(statusCode);
     if (statusCode === 200 || statusCode === 201) {
+        // if (body.Post.length < 1) {
+        //     return "表示できる投稿がないです。"
+        // }
         return body
     } else {
         return body.message
@@ -115,6 +118,29 @@ export async function getPostsLogin(setStatusCode) {
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
             "token": localStorage.getItem('token'),
+            // 'Access-Control-Allow-Origin': 'http://localhost:8000'
+        },
+    };
+    const response = await fetch(url, params);
+    const body = await response.json();
+    const statusCode = response.status
+    setStatusCode(statusCode);
+    if (statusCode === 200 || statusCode === 201) {
+        return body
+    } else {
+        return body.message
+    }
+}
+
+export async function getUserAllPosts(userId, setStatusCode) {
+    //const userId = localStorage.getItem('userId')
+
+    const url = "http://localhost:8000/api/post/user/userId/" + userId + "?count=5&lastPostId=null";
+    const params = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            //"token": localStorage.getItem('token'),
             // 'Access-Control-Allow-Origin': 'http://localhost:8000'
         },
     };

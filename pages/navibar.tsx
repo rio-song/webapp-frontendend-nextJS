@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react'
-import { AiOutlineSearch } from 'react-icons/ai';
+import { FiPlusSquare } from 'react-icons/fi';
+import { BsFillHouseDoorFill } from 'react-icons/bs';
 import { Navbar, Container, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
 import EditProfile from "./editProfile"
 import RegisterPostImage from './registerPostImage'
 import LoginPage from './loginPage'
 import ResisterUser from './registerUser'
 import { Logout } from '../type/api';
+import { CgProfile } from "react-icons/cg";
+import utilStyles from '../styles/utils.module.css'
+import { IconContext } from "react-icons"
 
 export default function Navibar(props) {
     const [profileShow, setPlofileShow] = useState(false);
@@ -38,33 +42,25 @@ export default function Navibar(props) {
             <Navbar bg="light" expand="lg" fixed="top">
                 <Container>
                     <Navbar.Brand href="#home">App</Navbar.Brand>
-                    <Form className="d-flex">
-                        <FormControl
-                            type="search"
-                            placeholder="Search"
-                            className="me-2"
-                            aria-label="Search"
-                        />
-                        <Button variant="outline-success" ><AiOutlineSearch /></Button>
-                    </Form>
-                    {props.loginStatus ? (
-                        <>
-                            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                            <Navbar.Collapse id="basic-navbar-nav">
-                                <Nav className="me-auto">
-                                    <NavDropdown title="マイページ" id="basic-nav-dropdown" >
-                                        <NavDropdown.Item onClick={handleRegisterImageShow}>投稿する</NavDropdown.Item>
+                    <div className={utilStyles.navIcons}>
+                        <IconContext.Provider value={{ color: '#262626', size: '30px' }}>
+                            <BsFillHouseDoorFill className={utilStyles.icon} />
+                            {props.loginStatus ? (
+                                <>
+                                    <span onClick={handleRegisterImageShow}> <FiPlusSquare className={utilStyles.icon} /></span>
+                                    <NavDropdown title={<CgProfile className={utilStyles.icon} />} >
+                                        <NavDropdown.Item >マイページ</NavDropdown.Item>
                                         <NavDropdown.Item onClick={handleProfileShow}>プロフィールの編集</NavDropdown.Item>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item onClick={logout}>ログアウト</NavDropdown.Item>
                                     </NavDropdown>
-                                </Nav>
-                            </Navbar.Collapse>
-                        </>) : (
-                        <Button onClick={handleLogin}>ログイン</Button>
-                    )}
+                                </>) : (
+                                <span onClick={handleLogin}><CgProfile /></span>
+                            )}
+                        </IconContext.Provider>
+                    </div>
                 </Container>
-            </Navbar>
+            </Navbar >
 
             <EditProfile
                 profileShow={profileShow}
