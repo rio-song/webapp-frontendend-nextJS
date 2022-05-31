@@ -13,7 +13,6 @@ import { DataChange } from '../type/util';
 
 export default function Post(props) {
   const json = props.result.Post;
-
   const [statusCode, setStatusCode] = useState();
   const [isError, setIsError] = useState(false);
   const [errorContent, setErrorContent] = useState("");
@@ -24,7 +23,6 @@ export default function Post(props) {
     props.setFavo(favo)
     deleteFavo(id)
   }
-
 
   const hundlefavo = (id, indexNum) => {
     let favo = [...props.favos]
@@ -57,11 +55,13 @@ export default function Post(props) {
     }
   }, [statusCode, props.postDetailResult])
 
+  const handleLoginShow = () => props.setLoginPopShow(true)
+
   return (
-    <li >
+    <li className={utilStyles.list}>
       {
         json.map(post => (
-          <Card style={{ width: '40rem' }} className={utilStyles.postList}>
+          <Card className={utilStyles.postList}>
             <span onClick={() => props.handlePagePostByUser(post.userId)}>
               <span className={utilStyles.icon}>
                 <Img src={post.userImageUrl}
@@ -91,7 +91,7 @@ export default function Post(props) {
                       <IconContext.Provider value={{ color: '#262626', size: '24px' }}><AiOutlineHeart className={utilStyles.icon} /></IconContext.Provider>
                     </span>)}
                 </>) : (
-                  <span>
+                  <span onClick={() => handleLoginShow()}>
                     <IconContext.Provider value={{ color: '#262626', size: '24px' }}><AiOutlineHeart className={utilStyles.icon} /></IconContext.Provider>
                   </span>)}
                 <span onClick={() => handlePostDetailShow(post.id, json.indexOf(post))}><FaRegComment className={utilStyles.icon} /></span>

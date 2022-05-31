@@ -9,6 +9,7 @@ export const siteTitle = 'App'
 export default function Layout({ children, home }) {
 
   return (
+    // <meta name="viewport"  >
     <div className={styles.container}>
       <Head>
         <link rel="icon" href="/favicon.ico" />
@@ -68,5 +69,6 @@ export default function Layout({ children, home }) {
         )
       } */}
     </div >
+    // </meta >
   )
 }

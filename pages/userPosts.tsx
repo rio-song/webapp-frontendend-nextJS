@@ -1,6 +1,6 @@
-import Layout, { siteTitle } from '../components/layout'
+import Layout from '../components/layout'
 import NestedLayout from '../components/layout'
-import utilStyles from '../styles/utils.module.css'
+import userPost from '../styles/userPost.module.css'
 import { getUserAllPosts } from '../type/api'
 import { useState, useEffect } from 'react'
 import PostByUser from './postByUser'
@@ -23,12 +23,24 @@ export default function UserPosts(props) {
 
   const router = useRouter();
 
+  let currentViewUserId;
+
   useEffect(() => {
     async function fetchData() {
-      const result = await getUserAllPosts(router.query.userId, setStatusCode);
-      setResult(result);
-      const favoArray = result.Post.map(post => (post.favoStatus))
-      setFavo(favoArray)
+      if (router.query.input = "me") {
+        currentViewUserId = localStorage.getItem('userId')
+      } else {
+        currentViewUserId = localStorage.getItem('currentViewUserId')
+      }
+      const res = await getUserAllPosts(currentViewUserId, setStatusCode);
+      setResult(res);
+      if (res != null) {
+        const favoArray = res.Post.map(post => (post.favoStatus))
+        setFavo(favoArray)
+      } else {
+        setIsError(true);
+        setErrorContent("表示できるコンテンツがありません。");
+      }
     }
     fetchData();
   }, []);
@@ -48,17 +60,17 @@ export default function UserPosts(props) {
   }, [statusCode, result])
 
   return (
-    <><br></br><br></br><br></br><br></br>
+    <><br /><br /><br /><br />
       {isError ? (errorContent) : (<>
         {result && < UserPostsTop result={result} />}
-        <ul className={utilStyles.list} >
+        <ul className={userPost.list} >
           {result && <PostByUser result={result} setPostDetailShow={setPostDetailShow}
             setPostDetailResult={setPostDetailResult} loginStatus={props.loginStatus}
             favos={favos} setFavo={setFavo} setTapFavosIndex={setTapFavosIndex} />}
         </ul >
         {postDetailResult && <PostDetail postDetailResult={postDetailResult}
           postDetailShow={postDetailShow} setPostDetailShow={setPostDetailShow}
-          favos={favos} setFavo={setFavo} tapFavosIndex={tapFavosIndex} />}
+          favos={favos} setFavo={setFavo} tapFavosIndex={tapFavosIndex} loginStatus={props.loginStatus} />}
       </>)}
     </>)
 }

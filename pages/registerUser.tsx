@@ -1,7 +1,6 @@
 import { Button, Modal, Form } from 'react-bootstrap'
-import { useRef } from 'react';
 import { registerUserInfo } from '../type/api'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 
 export default function ResisterUser(props) {

@@ -6,7 +6,8 @@ import Navibar from './navibar';
 export default function App({ Component, pageProps }) {
   const getLayout = Component.getLayout || ((page) => page)
   const [loginStatus, setLoginStatus] = useState(false);
-  pageProps = { loginStatus, setLoginStatus }
+  const [loginPopShow, setLoginPopShow] = useState(false);
+  pageProps = { loginStatus, setLoginStatus, loginPopShow, setLoginPopShow }
 
   return getLayout(
     <>

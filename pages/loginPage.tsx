@@ -1,7 +1,6 @@
 import { Button, Modal, Form } from 'react-bootstrap'
-import { useRef } from 'react';
 import { Login } from '../type/api';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 export default function LoginPage(props) {
 
@@ -19,10 +18,20 @@ export default function LoginPage(props) {
         props.setLoginPopShow(false);
         props.setResisterUserPopShow(true);
     }
-    const passwordRef = useRef(null);
+
+    // const [emailValidation, setEmailvalidation] = useState();
+    // const [emailValidationText, setEmailvalidationText] = useState();
+    // const [pwValidation, setPwValidation] = useState();
+    // const [pwValidationText, setPwValidationText] = useState();
+
     const emailRef = useRef(null);
+    const passwordRef = useRef(null);
 
     const login = () => {
+        // if (emailRef.match(/^([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$)/) {
+        // }
+        // if (passwordRef)
+
         async function fetchData() {
             const result = await Login(emailRef.current.value, passwordRef.current.value, setStatusCode);
             setResult(result);
@@ -56,6 +65,7 @@ export default function LoginPage(props) {
                             autoFocus
                         />
                     </Form.Group>
+                    {/* {emailValidation ? (<div className={utilStyles.validation}>{emailValidationText}</div>) : (<></>)} */}
                     <Form.Group
                         className="mb-3"
                         controlId="exampleForm.ControlTextarea1"
@@ -69,6 +79,7 @@ export default function LoginPage(props) {
                         />
                     </Form.Group>
                 </Form>
+                {/* {emailValidation ? (<div className={utilStyles.validation}>{pwValidationText}</div>) : (<></>)} */}
                 {isError ? (errorContent) : (<></>)}
                 <br></br>
             </Modal.Body>

@@ -1,6 +1,7 @@
 import { Button, Modal, Row, Col, Form } from 'react-bootstrap'
 import { useState, useRef, useEffect } from 'react';
 import { PostImage } from '../type/api';
+import utilStyles from '../styles/utils.module.css'
 
 export default function RegisterPostImage(props) {
 
@@ -67,7 +68,7 @@ export default function RegisterPostImage(props) {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    新規投稿を作成
+                    新規投稿
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -78,14 +79,14 @@ export default function RegisterPostImage(props) {
                         </Col>
                         <Col xs={6} md={4}>
                             <Form >
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
-                                    <Form.Label name="title" >タイトル</Form.Label>
-                                    <input ref={titleRef} type="text" />
+                                <Form.Group className="mb-3" >
+                                    <Form.Label className={utilStyles.text} >タイトル</Form.Label>
+                                    <input className={utilStyles.input} ref={titleRef} type="text" />
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formBasicPassword">
-                                    <Form.Label name="comment">コメント</Form.Label>
-                                    <Form.Control as="textarea" ref={commentRef} rows={3} />
+                                <Form.Group className="mb-3" >
+                                    <Form.Label className={utilStyles.text}>コメント</Form.Label>
+                                    <Form.Control className={utilStyles.input} as="textarea" ref={commentRef} rows={3} />
                                 </Form.Group>
                                 <Button variant="outline-primary" onClick={handleChangeFileAgain}>戻る</Button>
                                 <Button variant="primary" onClick={getPostInfo}>

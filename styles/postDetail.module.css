@@ -1,0 +1,134 @@
+
+.detailContent1{
+  height: 90vh;
+  padding:0;
+}
+
+.detailContent2{
+  padding:0;
+    height: 90vh;
+}
+.detailUserInfo{
+  margin: 10px 0px 0px;
+  padding-bottom: 5px;
+  border: 1px solid;
+  border-top: transparent;
+  border-left: transparent;
+  border-right: transparent;
+  border-color:#F2F2F2;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.icon{
+  margin: 0px 15px 0px;
+  color: #262626; display: flex;
+  align-items: center;
+}
+
+
+.iconDetailProfileMenu1{
+  position:absolute;
+  right: 0px;
+  margin-right: 30px;
+  color: #262626;
+}
+.iconDetailCommentMenu{
+  margin-left: 15px;
+  color: #8E8E8E;
+  font-size: 12px;
+  font:BlinkMacSystemFont;
+}
+
+
+.commentArera{
+  overflow: scroll;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  height: calc(100% - 50px - 60px - 75px - 10px);
+}
+
+.comment{
+  display: flex;
+}
+.commentTittle{
+  color: #262626;
+  font-size: 14px;
+  font:BlinkMacSystemFont;
+  margin-left: 10px;
+}
+
+.postImage{
+  color: #FFFF;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+}
+
+.postImageArea2{
+  background: #F2F2F2;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  height: 100%;
+  width: 100%;
+}
+
+.favoArea{
+  border: 1px solid;
+  border-bottom: transparent;
+  border-left: transparent;
+  border-right: transparent;
+  border-color:#F2F2F2;
+  height: 75px;
+}
+
+.icons{
+  margin-left:10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.favoCount{
+  color: #262626;
+  font-size: 14px;
+  font-weight: bold;
+  font:BlinkMacSystemFont;
+  margin-left:15px;
+  margin-top: 5px;
+}
+
+.addCommentArea{
+  display: flex;
+  border: 1px solid;
+  border-bottom: transparent;
+  border-left: transparent;
+  border-right: transparent;
+  border-color:#F2F2F2;
+  align-items: center;
+  height: 60px;
+}
+.addComment{
+  border: transparent;
+  resize: none;
+  outline: none;
+  margin:0px 0px 0px 15px;
+  width: 80%;
+  height: 30px;
+}
+
+.addComment::placeholder{
+  font-size: 12pt;
+  color: #8E8E8E;
+  font:BlinkMacSystemFont;
+}
+
+.addCommentButton{
+  border: transparent;
+  color: #262626;
+  font-size: 14px;
+  font-weight: bold;
+  font:BlinkMacSystemFont;
+  width: 20%;
+}

@@ -1,17 +1,17 @@
 import utilStyles from '../styles/utils.module.css'
-import { AiFillHeart, AiOutlineHeart, AiOutlineLoading3Quarters } from "react-icons/ai";
+import userPost from '../styles/userPost.module.css'
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { MdImageNotSupported } from "react-icons/md";
-import { CgProfile } from "react-icons/cg";
-import { FaRegComment } from "react-icons/fa";
 import { useState, useEffect } from 'react';
 import { postFavo, deleteFavo, getPostDetail } from '../type/api';
-import React, { Component } from 'react';
+import React from 'react';
 import { Img } from 'react-image';
 import { IconContext } from "react-icons"
+import { Card } from 'react-bootstrap'
 
 export default function PostByUser(props) {
     const json = props.result.Post;
-    console.log("kokきているか")
+
     const [statusCode, setStatusCode] = useState();
     const [isError, setIsError] = useState(false);
     const [errorContent, setErrorContent] = useState("");
@@ -31,7 +31,6 @@ export default function PostByUser(props) {
     //     postFavo(id)
     // }
 
-    // //詳細画面に遷移
     const handlePostDetailShow = (id, indexNum) => {
         props.setPostDetailShow(true);
         props.setTapFavosIndex(indexNum)
@@ -56,15 +55,19 @@ export default function PostByUser(props) {
     }, [statusCode, props.postDetailResult])
 
     return (
-        <li className={utilStyles.listItem}>
+        <li className={userPost.listItem}>
             {json.map(post => (
-                <IconContext.Provider value={{ size: '50px' }}>
-                    <span className={utilStyles.postImageArea1} onClick={() => handlePostDetailShow(post.id, json.indexOf(post))} >
-                        <Img src={post.imageUrl}
-                            loader={<AiOutlineLoading3Quarters className={utilStyles.postImage} />}
-                            unloader={<MdImageNotSupported className={utilStyles.postImage} />} />
-                    </span >
-                </IconContext.Provider>
+                <Card className={userPost.postImageAreabyUser}>
+                    <Card.Body onClick={() => handlePostDetailShow(post.id, json.indexOf(post))}
+                        className={utilStyles.navIcons}>
+                        <IconContext.Provider value={{ size: '50px' }}>
+                            <Img src={post.imageUrl}
+                                loader={<AiOutlineLoading3Quarters />}
+                                unloader={<MdImageNotSupported />} />
+                        </IconContext.Provider>
+
+                    </Card.Body>
+                </Card>
             ))}
         </ li >
     )

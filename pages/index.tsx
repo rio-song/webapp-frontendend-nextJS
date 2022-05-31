@@ -9,15 +9,14 @@ import { useRouter } from 'next/router';
 
 export default function Home(props) {
   //各Postの表示
-  const [result, setResult] = useState();
+  const [result, setResult] = useState(null);
   //詳細画面の表示
   const [postDetailShow, setPostDetailShow] = useState(false);
-  const [postDetailResult, setPostDetailResult] = useState(null);
+  const [postDetailResult, setPostDetailResult] = useState();
 
   const [statusCode, setStatusCode] = useState();
   const [isError, setIsError] = useState(false);
   const [errorContent, setErrorContent] = useState("");
-
 
   const [favos, setFavo] = useState();
   const [tapFavosIndex, setTapFavosIndex] = useState();
@@ -25,11 +24,10 @@ export default function Home(props) {
   const router = useRouter();
 
   const handlePagePostByUser = (userId) => {
+    localStorage.setItem('currentViewUserId', userId);
     router.push({
-      pathname: "/userPosts",
-      query: { userId: userId }
+      pathname: "/userPosts"
     });
-
   }
 
 
@@ -37,20 +35,27 @@ export default function Home(props) {
     async function fetchData() {
       const token = localStorage.getItem('token')
       setIsError(false)
+
+      let res
       if (token !== null) {
-        const result = await getPostsLogin(setStatusCode);
-        setResult(result);
-        const favoArray = result.Post.map(post => (post.favoStatus))
+        res = await getPostsLogin(setStatusCode);
+        setResult(res);
+      } else {
+        res = await getPosts(setStatusCode);
+        setResult(res);
+      }
+
+      if (res != null) {
+        const favoArray = res.Post.map(post => (post.favoStatus))
         setFavo(favoArray)
       } else {
-        const result = await getPosts(setStatusCode);
-        setResult(result);
-        const favoArray = result.Post.map(post => (post.favoStatus))
-        setFavo(favoArray)
+        setIsError(true);
+        setErrorContent("表示できるコンテンツがありません。");
       }
+
     }
     fetchData();
-  }, []);
+  }, [props.loginStatus]);
 
   useEffect(() => {
     if (statusCode === 200 || statusCode === 201) {
@@ -66,21 +71,22 @@ export default function Home(props) {
     }
   }, [statusCode, result])
 
-
   return (
-    <><br></br>
-      {isError ? (errorContent) : (<>
+    <><br />
+      {isError ? (<><br /><br /><br /><br />{errorContent}</>) : (<>
         <ul className={utilStyles.list} >
           {result && <Post result={result} setPostDetailShow={setPostDetailShow}
             setPostDetailResult={setPostDetailResult} loginStatus={props.loginStatus}
+            setLoginPopShow={props.setLoginPopShow}
             favos={favos} setFavo={setFavo} setTapFavosIndex={setTapFavosIndex}
             handlePagePostByUser={handlePagePostByUser} />}
         </ul >
         {postDetailResult && <PostDetail postDetailResult={postDetailResult}
-          postDetailShow={postDetailShow} setPostDetailShow={setPostDetailShow}
-          favos={favos} setFavo={setFavo} tapFavosIndex={tapFavosIndex} />
+          postDetailShow={postDetailShow} setPostDetailShow={setPostDetailShow} setLoginPopShow={props.setLoginPopShow}
+          favos={favos} setFavo={setFavo} tapFavosIndex={tapFavosIndex} loginStatus={props.loginStatus} />
         } </>
-      )}</>)
+      )
+      }</>)
 }
 
 Home.getLayout = function getLayout(home, props) {

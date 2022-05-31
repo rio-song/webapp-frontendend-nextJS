@@ -1,21 +1,27 @@
 import { useState, useEffect } from 'react'
 import { FiPlusSquare } from 'react-icons/fi';
 import { BsFillHouseDoorFill } from 'react-icons/bs';
-import { Navbar, Container, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
-import EditProfile from "./editProfile"
+import { Navbar, Container, NavDropdown } from 'react-bootstrap'
+import ViewProfile from "./viewProfile"
 import RegisterPostImage from './registerPostImage'
 import LoginPage from './loginPage'
 import ResisterUser from './registerUser'
-import { Logout } from '../type/api';
 import { CgProfile } from "react-icons/cg";
 import utilStyles from '../styles/utils.module.css'
 import { IconContext } from "react-icons"
+import { getUser, Logout } from '../type/api';
+import { useRouter } from 'next/router';
 
 export default function Navibar(props) {
-    const [profileShow, setPlofileShow] = useState(false);
-    const handleProfileShow = () => setPlofileShow(true);
+    const [viewProfileShow, setViewProfileShow] = useState(false);
     const [registerImageShow, setRegisterImageShow] = useState(false);
     const handleRegisterImageShow = () => setRegisterImageShow(true);
+
+    const [viewProfileResult, setViewProfileResult] = useState();
+    const [statusCode, setStatusCode] = useState();
+    const [isError, setIsError] = useState(false);
+    const [errorContent, setErrorContent] = useState("");
+
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -23,34 +29,65 @@ export default function Navibar(props) {
             props.setLoginStatus(true);
         }
     }, [])
-    const [loginPopShow, setLoginPopShow] = useState(false);
-    const handleLogin = () => setLoginPopShow(true)
 
-    const [resisterUserPopShow, setResisterUserPopShow] = useState(false);
+    const handleLogin = () => props.setLoginPopShow(true)
+
+    const [resisterUserPopShow, setResisterUserPopShow] = useState();
 
     const logout = () => {
         async function fetchData() {
             const login = await Logout();
         }
         fetchData()
-        localStorage.clear()
+        localStorage.removeItem('token')
+        localStorage.removeItem('userId')
         props.setLoginStatus(false);
+    }
+
+    const handleViewProfileShow = () => {
+        setViewProfileShow(true)
+        async function fetchData() {
+            const getUserResult = await getUser(setStatusCode);
+            setViewProfileResult(getUserResult);
+        }
+        fetchData();
+    }
+    useEffect(() => {
+        if (statusCode === 200 || statusCode === 201) {
+            setIsError(false)
+        } else if (statusCode === 400) {
+            setIsError(true);
+            setErrorContent(viewProfileResult);
+            localStorage.clear()
+            props.setLoginStatus(false);
+        } else {
+            setIsError(true);
+            setErrorContent(viewProfileResult);
+        }
+    }, [statusCode, viewProfileResult])
+
+    const router = useRouter();
+    const handleMyPostPage = () => {
+        router.push({
+            pathname: "/userPosts",
+            query: { page: "me" }
+        });
     }
 
     return (
         <>
             <Navbar bg="light" expand="lg" fixed="top">
                 <Container>
-                    <Navbar.Brand href="#home">App</Navbar.Brand>
+                    <Navbar.Brand href="/">App</Navbar.Brand>
                     <div className={utilStyles.navIcons}>
                         <IconContext.Provider value={{ color: '#262626', size: '30px' }}>
-                            <BsFillHouseDoorFill className={utilStyles.icon} />
                             {props.loginStatus ? (
                                 <>
-                                    <span onClick={handleRegisterImageShow}> <FiPlusSquare className={utilStyles.icon} /></span>
+                                    <BsFillHouseDoorFill className={utilStyles.icon} onClick={() => handleMyPostPage()} />
+                                    <FiPlusSquare className={utilStyles.icon} onClick={() => handleRegisterImageShow()} />
                                     <NavDropdown title={<CgProfile className={utilStyles.icon} />} >
-                                        <NavDropdown.Item >マイページ</NavDropdown.Item>
-                                        <NavDropdown.Item onClick={handleProfileShow}>プロフィールの編集</NavDropdown.Item>
+                                        <NavDropdown.Item>マイページ</NavDropdown.Item>
+                                        <NavDropdown.Item onClick={() => handleViewProfileShow()}>プロフィールの確認</NavDropdown.Item>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item onClick={logout}>ログアウト</NavDropdown.Item>
                                     </NavDropdown>
@@ -62,15 +99,17 @@ export default function Navibar(props) {
                 </Container>
             </Navbar >
 
-            <EditProfile
-                profileShow={profileShow}
-                setprofileShow={setPlofileShow}></EditProfile>
+            {viewProfileResult && <ViewProfile
+                viewProfileShow={viewProfileShow}
+                setViewProfileShow={setViewProfileShow}
+                viewProfileResult={viewProfileResult}></ViewProfile>
+            }
             <RegisterPostImage
                 registerImageShow={registerImageShow}
                 setRegisterImageShow={setRegisterImageShow}></RegisterPostImage>
             <LoginPage
-                loginPopShow={loginPopShow}
-                setLoginPopShow={setLoginPopShow}
+                loginPopShow={props.loginPopShow}
+                setLoginPopShow={props.setLoginPopShow}
                 setResisterUserPopShow={setResisterUserPopShow}
                 setLoginStatus={props.setLoginStatus}
             >
