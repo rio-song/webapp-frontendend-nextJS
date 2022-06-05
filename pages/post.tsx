@@ -12,7 +12,7 @@ import { IconContext } from "react-icons"
 import { DataChange } from '../type/util';
 
 export default function Post(props) {
-  const json = props.result.Post;
+  const json = props.postResult.Post;
   const [statusCode, setStatusCode] = useState();
   const [isError, setIsError] = useState(false);
   const [errorContent, setErrorContent] = useState("");
@@ -21,6 +21,9 @@ export default function Post(props) {
     let favo = [...props.favos]
     favo[indexNum] = false
     props.setFavo(favo)
+    let countFavo = [...props.favosCount]
+    countFavo[indexNum] -= 1
+    props.setFavosCount(countFavo)
     deleteFavo(id)
   }
 
@@ -28,22 +31,28 @@ export default function Post(props) {
     let favo = [...props.favos]
     favo[indexNum] = true
     props.setFavo(favo)
+    let countFavo = [...props.favosCount]
+    countFavo[indexNum] += 1
+    props.setFavosCount(countFavo)
     postFavo(id)
   }
 
   // //詳細画面に遷移
   const handlePostDetailShow = (id, indexNum) => {
     props.setPostDetailShow(true);
-    props.setTapFavosIndex(indexNum)
+    props.setTapIndex(indexNum)
     async function fetchData() {
       const postDetailResult = await getPostDetail(id, setStatusCode);
       props.setPostDetailResult(postDetailResult);
+      const commentArray = postDetailResult.PostDetail.comments
+      props.setComments(commentArray)
     }
     fetchData();
   }
   useEffect(() => {
     if (statusCode === 200 || statusCode === 201) {
       setIsError(false)
+
     } else if (statusCode === 400) {
       setIsError(true);
       setErrorContent(props.postDetailResult);
@@ -62,7 +71,7 @@ export default function Post(props) {
       {
         json.map(post => (
           <Card className={utilStyles.postList}>
-            <span onClick={() => props.handlePagePostByUser(post.userId)}>
+            <span onClick={() => props.handlePagePostByUser(post.userId)} className={utilStyles.userArea}>
               <span className={utilStyles.icon}>
                 <Img src={post.userImageUrl}
                   loader={<CgProfile />}
@@ -96,10 +105,13 @@ export default function Post(props) {
                   </span>)}
                 <span onClick={() => handlePostDetailShow(post.id, json.indexOf(post))}><FaRegComment className={utilStyles.icon} /></span>
               </Card.Text>
-              <div className={utilStyles.text} >
-                <span className={utilStyles.text3}>「{post.title}」</span>に<span className={utilStyles.text3}>{post.favosCount}人</span>が「いいね！」しました
-              </div>
-              <div onClick={() => handlePostDetailShow(post.id, json.indexOf(post))} className={utilStyles.text5}> コメント{post.commentsCount} 件をすべて見る</div>
+              {props.favosCount ? (
+                <div className={utilStyles.text} >
+                  <span className={utilStyles.text3}>「{post.title}」</span>に<span className={utilStyles.text3}>{props.favosCount[json.indexOf(post)]}人</span>が「いいね！」しました
+                </div>) : (<></>)}
+              {props.commentsCount ? (
+                <div onClick={() => handlePostDetailShow(post.id, json.indexOf(post))} className={utilStyles.text5}> コメント{props.commentsCount[json.indexOf(post)]} 件をすべて見る</div>
+              ) : (<></>)}
               <div className={utilStyles.text6}>{DataChange(post.postedAt)}</div>
             </Card.Body>
           </Card>

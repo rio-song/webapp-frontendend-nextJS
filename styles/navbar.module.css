@@ -1,0 +1,47 @@
+
+.input{
+  color: #262626;
+  border: transparent;
+  resize: none;
+  outline: none;
+  margin:10px 5px 20px ;
+}
+.input::placeholder{
+  font-size: 10pt;
+  color: #8E8E8E;
+  font:BlinkMacSystemFont;
+}
+
+.inputArea{
+  color: #262626;
+  border: 1px solid;
+  border-top: transparent;
+  border-left: transparent;
+  border-right: transparent;
+  border-color:rgba(88, 86, 86, 0.2);
+  resize: none;
+  outline: none;
+  margin-bottom: 10px;
+  margin-right: 5px;
+}
+.newPostArea{
+  padding: 0;
+  margin: 0;
+}
+.return{
+  color: #262626;
+  font-size: 14px;
+  position:absolute;
+  margin-right: 30px;
+  right: 0px;
+  bottom: 0px;
+  margin-bottom: 20px;
+}
+.post{
+  color: #262626;
+  font-size: 16px;
+  position:absolute;
+  margin-right: 30px;
+  right: 0px;
+  padding-top: 1px;
+}

@@ -86,7 +86,7 @@ export default function Navibar(props) {
                                     <BsFillHouseDoorFill className={utilStyles.icon} onClick={() => handleMyPostPage()} />
                                     <FiPlusSquare className={utilStyles.icon} onClick={() => handleRegisterImageShow()} />
                                     <NavDropdown title={<CgProfile className={utilStyles.icon} />} >
-                                        <NavDropdown.Item>マイページ</NavDropdown.Item>
+                                        <NavDropdown.Item onClick={() => handleMyPostPage()}>マイページ</NavDropdown.Item>
                                         <NavDropdown.Item onClick={() => handleViewProfileShow()}>プロフィールの確認</NavDropdown.Item>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item onClick={logout}>ログアウト</NavDropdown.Item>
@@ -102,11 +102,13 @@ export default function Navibar(props) {
             {viewProfileResult && <ViewProfile
                 viewProfileShow={viewProfileShow}
                 setViewProfileShow={setViewProfileShow}
-                viewProfileResult={viewProfileResult}></ViewProfile>
+                viewProfileResult={viewProfileResult}
+                setLoginStatus={props.setLoginStatus}></ViewProfile>
             }
             <RegisterPostImage
                 registerImageShow={registerImageShow}
-                setRegisterImageShow={setRegisterImageShow}></RegisterPostImage>
+                setRegisterImageShow={setRegisterImageShow}
+                topRefresh={props.topRefresh} setTopRefresh={props.setTopRefresh} ></RegisterPostImage>
             <LoginPage
                 loginPopShow={props.loginPopShow}
                 setLoginPopShow={props.setLoginPopShow}
@@ -117,7 +119,8 @@ export default function Navibar(props) {
             <ResisterUser
                 resisterUserPopShow={resisterUserPopShow}
                 setResisterUserPopShow={setResisterUserPopShow}
-                setLoginStatus={props.setLoginStatus}></ResisterUser>
+                setLoginStatus={props.setLoginStatus}
+                postResult={props.postResult} setPostResult={props.setPostResult}></ResisterUser>
         </>
     )
 }

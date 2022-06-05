@@ -25,14 +25,14 @@ export default function EditProfile(props) {
     const profileTextRef = useRef(null);
 
 
-    useEffect(() => {
+    const hundlePutUser = () => {
         async function fetchData() {
-            const result = await putUser(familyNameRef, firstNameRef, nickNameRef,
-                emailRef, profileTextRef, profileTextRef, setStatusCode);
+            const result = await putUser(familyNameRef.current.value, firstNameRef.current.value, nickNameRef.current.value,
+                emailRef.current.value, profileTextRef.current.value, profileTextRef.current.value, setStatusCode);
             setResult(result);
         }
         fetchData();
-    }, []);
+    }
 
     useEffect(() => {
         if (statusCode === 200 || statusCode === 201) {
@@ -65,7 +65,6 @@ export default function EditProfile(props) {
                     />
                     <Form.Label>お名前(名)</Form.Label>
                     <Form.Control
-                        type="email"
                         placeholder={json.firstName}
                         autoFocus
                         ref={firstNameRef}
@@ -73,7 +72,6 @@ export default function EditProfile(props) {
 
                     <Form.Label>ニックネーム</Form.Label>
                     <Form.Control
-                        type="email"
                         placeholder={json.nickName}
                         autoFocus
                         ref={nickNameRef}
@@ -93,7 +91,7 @@ export default function EditProfile(props) {
                         <Form.Label>Email</Form.Label>
                         <Form.Control
                             type="email"
-                            placeholder={json.firstName}
+                            placeholder={json.email}
                             autoFocus
                             ref={emailRef}
                         />
@@ -113,8 +111,8 @@ export default function EditProfile(props) {
                 <Button variant="secondary" onClick={() => handleCloseretuen()}>
                     戻る
                 </Button>
-                <Button variant="primary" onClick={handleClose}>
-                    Save Changes
+                <Button variant="primary" onClick={() => hundlePutUser()}>
+                    変更
                 </Button>
             </Modal.Footer>
         </Modal >

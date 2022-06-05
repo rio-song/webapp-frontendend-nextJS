@@ -1,7 +1,7 @@
 import { Button, Modal, Row, Col, Form } from 'react-bootstrap'
 import { useState, useRef, useEffect } from 'react';
 import { PostImage } from '../type/api';
-import utilStyles from '../styles/utils.module.css'
+import navbar from '../styles/navbar.module.css'
 
 export default function RegisterPostImage(props) {
 
@@ -49,6 +49,9 @@ export default function RegisterPostImage(props) {
     useEffect(() => {
         if (statusCode === 200 || statusCode === 201) {
             setSuccessContent(result)
+            props.setRegisterImageShow(false)
+            const newPostResult = props.topRefresh ? false : true
+            props.setTopRefresh(newPostResult)
         } else if (statusCode === 400) {
             setIsError(true);
             setErrorContent(result);
@@ -74,27 +77,26 @@ export default function RegisterPostImage(props) {
             <Modal.Body>
                 {showImg ? (
                     <Row>
-                        <Col xs={12} md={8}>
+                        <Col xs={12} md={8} >
                             <img src={preview} />
                         </Col>
-                        <Col xs={6} md={4}>
+                        <Col xs={6} md={4} className={navbar.newPostArea}>
                             <Form >
-                                <Form.Group className="mb-3" >
-                                    <Form.Label className={utilStyles.text} >タイトル</Form.Label>
-                                    <input className={utilStyles.input} ref={titleRef} type="text" />
+                                <Form.Group className={navbar.inputArea} >
+                                    <input className={navbar.input} placeholder='タイトルを入力' ref={titleRef} type="text" />
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" >
-                                    <Form.Label className={utilStyles.text}>コメント</Form.Label>
-                                    <Form.Control className={utilStyles.input} as="textarea" ref={commentRef} rows={3} />
+                                <Form.Group className={navbar.inputArea} >
+                                    <textarea className={navbar.input} placeholder="コメントを入力" ref={commentRef} ></textarea>
+
                                 </Form.Group>
-                                <Button variant="outline-primary" onClick={handleChangeFileAgain}>戻る</Button>
-                                <Button variant="primary" onClick={getPostInfo}>
+                                <span onClick={handleChangeFileAgain} className={navbar.return} >画像を変更する</span>
+                                <span onClick={getPostInfo} className={navbar.post}  >
                                     投稿
-                                </Button>
+                                </span>
                             </Form>
-                            <p> {isError ? (errorContent) : (<></>)}
-                                {successContent}</p>
+                            {/* <p> {isError ? (errorContent) : (<></>)}
+                                {successContent}</p> */}
                         </Col>
                     </Row>
                 ) : (

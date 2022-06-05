@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 
 export default function Home(props) {
   //各Postの表示
-  const [result, setResult] = useState(null);
+  const [postResult, setPostResult] = useState(null);
   //詳細画面の表示
   const [postDetailShow, setPostDetailShow] = useState(false);
   const [postDetailResult, setPostDetailResult] = useState();
@@ -19,7 +19,11 @@ export default function Home(props) {
   const [errorContent, setErrorContent] = useState("");
 
   const [favos, setFavo] = useState();
-  const [tapFavosIndex, setTapFavosIndex] = useState();
+  const [comments, setComments] = useState([]);
+
+  const [favosCount, setFavosCount] = useState();
+  const [commentsCount, setCommentsCount] = useState();
+  const [tapIndex, setTapIndex] = useState();
 
   const router = useRouter();
 
@@ -30,7 +34,6 @@ export default function Home(props) {
     });
   }
 
-
   useEffect(() => {
     async function fetchData() {
       const token = localStorage.getItem('token')
@@ -39,51 +42,59 @@ export default function Home(props) {
       let res
       if (token !== null) {
         res = await getPostsLogin(setStatusCode);
-        setResult(res);
+        setPostResult(res);
       } else {
         res = await getPosts(setStatusCode);
-        setResult(res);
+        setPostResult(res);
       }
 
       if (res != null) {
         const favoArray = res.Post.map(post => (post.favoStatus))
         setFavo(favoArray)
+        const favosCountArray = res.Post.map(post => (post.favosCount))
+        setFavosCount(favosCountArray)
+        const commentCountArray = res.Post.map(post => (post.commentsCount))
+        setCommentsCount(commentCountArray)
       } else {
         setIsError(true);
         setErrorContent("表示できるコンテンツがありません。");
       }
-
     }
     fetchData();
-  }, [props.loginStatus]);
+  }, [props.loginStatus, props.topRefresh]);
 
   useEffect(() => {
     if (statusCode === 200 || statusCode === 201) {
       setIsError(false)
     } else if (statusCode === 400) {
       setIsError(true);
-      setErrorContent(result);
+      setErrorContent(postResult);
       localStorage.clear()
       props.setLoginStatus(false);
     } else {
       setIsError(true);
-      setErrorContent(result);
+      setErrorContent(postResult);
     }
-  }, [statusCode, result])
+  }, [statusCode, postResult])
 
   return (
     <><br />
       {isError ? (<><br /><br /><br /><br />{errorContent}</>) : (<>
         <ul className={utilStyles.list} >
-          {result && <Post result={result} setPostDetailShow={setPostDetailShow}
+          {postResult && <Post postResult={postResult} setPostDetailShow={setPostDetailShow}
             setPostDetailResult={setPostDetailResult} loginStatus={props.loginStatus}
             setLoginPopShow={props.setLoginPopShow}
-            favos={favos} setFavo={setFavo} setTapFavosIndex={setTapFavosIndex}
-            handlePagePostByUser={handlePagePostByUser} />}
+            favos={favos} setFavo={setFavo} setTapIndex={setTapIndex}
+            handlePagePostByUser={handlePagePostByUser}
+            favosCount={favosCount} setFavosCount={setFavosCount}
+            commentsCount={commentsCount} comments={comments} setComments={setComments} />}
         </ul >
         {postDetailResult && <PostDetail postDetailResult={postDetailResult}
           postDetailShow={postDetailShow} setPostDetailShow={setPostDetailShow} setLoginPopShow={props.setLoginPopShow}
-          favos={favos} setFavo={setFavo} tapFavosIndex={tapFavosIndex} loginStatus={props.loginStatus} />
+          favos={favos} setFavo={setFavo} tapIndex={tapIndex} loginStatus={props.loginStatus}
+          topRefresh={props.topRefresh} setTopRefresh={props.setTopRefresh}
+          favosCount={favosCount} setFavosCount={setFavosCount} comments={comments} setComments={setComments}
+          commentsCount={commentsCount} setCommentsCount={setCommentsCount} />
         } </>
       )
       }</>)

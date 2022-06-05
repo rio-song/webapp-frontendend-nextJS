@@ -69,8 +69,6 @@
 
 .postImageArea2{
   background: #F2F2F2;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
   height: 100%;
   width: 100%;
 }
@@ -131,4 +129,23 @@
   font-weight: bold;
   font:BlinkMacSystemFont;
   width: 20%;
+}
+
+.detailMenus{
+  text-align:  center;
+  padding: 0;
+}
+.detailMenu1{
+  border: 1px solid;
+  border-top: transparent;
+  border-left: transparent;
+  border-right: transparent;
+  border-color:rgba(0,0,0,.2);
+  padding-top:20px;
+  padding-bottom:20px;
+}
+
+.detailMenu2{
+  padding-top:20px;
+  padding-bottom:20px;
 }

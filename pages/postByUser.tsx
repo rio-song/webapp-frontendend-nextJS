@@ -33,7 +33,7 @@ export default function PostByUser(props) {
 
     const handlePostDetailShow = (id, indexNum) => {
         props.setPostDetailShow(true);
-        props.setTapFavosIndex(indexNum)
+        props.setTapIndex(indexNum)
         async function fetchData() {
             const postDetailResult = await getPostDetail(id, setStatusCode);
             props.setPostDetailResult(postDetailResult);

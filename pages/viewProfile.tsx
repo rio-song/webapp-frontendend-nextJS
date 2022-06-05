@@ -31,7 +31,7 @@ export default function ViewProfile(props) {
                     <div className={utilStyles.text5} >自己紹介文</div>
                     <span className={utilStyles.text7}>{json.profileText}</span>
                     <div className={utilStyles.text5} >Email</div>
-                    <span className={utilStyles.text7}>{json.firstName}</span>
+                    <span className={utilStyles.text7}>{json.email}</span>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="primary" onClick={() => hundleEditProfile()}>

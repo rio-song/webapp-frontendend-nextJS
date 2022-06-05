@@ -7,7 +7,9 @@ export default function App({ Component, pageProps }) {
   const getLayout = Component.getLayout || ((page) => page)
   const [loginStatus, setLoginStatus] = useState(false);
   const [loginPopShow, setLoginPopShow] = useState(false);
-  pageProps = { loginStatus, setLoginStatus, loginPopShow, setLoginPopShow }
+  const [topRefresh, setTopRefresh] = useState(true);
+
+  pageProps = { loginStatus, setLoginStatus, loginPopShow, setLoginPopShow, topRefresh, setTopRefresh }
 
   return getLayout(
     <>

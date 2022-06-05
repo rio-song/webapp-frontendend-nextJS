@@ -262,7 +262,29 @@ export async function deleteFavo(id) {
 
     return posts
 }
-export async function postComment(id, comment, setStatusCode) {
+
+export async function getComment(id, setStatusCode) {
+
+    const url = "http://localhost:8000/api/comment/postId/" + id;
+    const params = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "token": localStorage.getItem('token'),
+        },
+    };
+    const response = await fetch(url, params);
+    const body = await response.json();
+    const statusCode = response.status
+    setStatusCode(statusCode);
+    if (statusCode === 200 || statusCode === 201) {
+        return body
+    } else {
+        return body.message
+    }
+}
+
+export async function postComment(id, comment, setPostCommentStatusCode) {
 
     const userId = localStorage.getItem('userId')
     const url = "http://localhost:8000/api/comment/postId/" + id + "/userId/" + userId;
@@ -280,8 +302,9 @@ export async function postComment(id, comment, setStatusCode) {
     }
 
     const response = await fetch(url, request);
+    setPostCommentStatusCode();
     const statusCode = response.status
-    setStatusCode(statusCode);
+    setPostCommentStatusCode(statusCode);
     if (statusCode === 200 || statusCode === 201) {
         return
     } else {
@@ -317,7 +340,7 @@ export async function postComment(id, comment, setStatusCode) {
 //     }
 // }
 
-export async function deleteComment(commentId, setStatusCode) {
+export async function deleteComment(commentId, setDeleteStatusCode) {
 
     const url = "http://localhost:8000/api/comment/commentId/" + commentId;
 
@@ -330,8 +353,9 @@ export async function deleteComment(commentId, setStatusCode) {
     }
 
     const response = await fetch(url, request);
+    setDeleteStatusCode();
     const statusCode = response.status
-    setStatusCode(statusCode);
+    setDeleteStatusCode(statusCode);
     if (statusCode === 200 || statusCode === 201) {
         return
     } else {
@@ -367,7 +391,7 @@ export async function putUser(familyName, firstName, nickName, email, password, 
     const hash = SHA256(password).toString();
 
     const userId = localStorage.getItem('userId')
-    const url = "http://localhost:8000/api/favo/user/userId/" + userId;
+    const url = "http://localhost:8000/api/user/userId/" + userId;
 
     const params = new URLSearchParams()
     params.append('firstName', firstName)
