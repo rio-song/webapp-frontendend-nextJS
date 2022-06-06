@@ -34,13 +34,14 @@ export async function registerUserInfo(familyName, firstName, nickName, email, p
 
 export async function Login(email, password, setStatusCode) {
 
-    console.log("email:" + email);
     var SHA256 = require("crypto-js/sha256");
     const hash = SHA256(password).toString();
 
     const params = new URLSearchParams()
     params.append('email', email)
     params.append('password', hash)
+    console.log("email:" + email);
+    console.log("password:" + hash);
 
     const url = "http://localhost:8000/api/login";
 

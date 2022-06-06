@@ -37,6 +37,8 @@ export default function PostByUser(props) {
         async function fetchData() {
             const postDetailResult = await getPostDetail(id, setStatusCode);
             props.setPostDetailResult(postDetailResult);
+            const commentArray = postDetailResult.PostDetail.comments
+            props.setComments(commentArray)
         }
         fetchData();
     }

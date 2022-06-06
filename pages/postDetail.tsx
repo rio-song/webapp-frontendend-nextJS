@@ -67,14 +67,18 @@ export default function PostDetail(props) {
     }
 
     const commentRef = useRef(null);
+    const postCommentValidationCheck = (postId) => {
 
+        if (commentRef.current.value.length === 0) {
+            return
+        } else {
+            hundlePost(postId)
+        }
+    }
     const hundlePost = (postId) => {
         async function fetchData() {
             setPostId(postId)
             const result = await postComment(postId, commentRef.current.value, setPostCommentStatusCode);
-            console.log("コメント１")
-            setPostCommentResult(result);
-            console.log("コメント２")
         }
         fetchData()
     }
@@ -218,7 +222,7 @@ export default function PostDetail(props) {
                                 <div className={utilStylesforDetail.addCommentArea}>
                                     <textarea ref={commentRef} className={utilStylesforDetail.addComment} placeholder="コメントを追加"></textarea>
                                     {props.loginStatus ? (
-                                        <span className={utilStylesforDetail.addCommentButton} onClick={() => hundlePost(json.id)}>投稿する</span>
+                                        <span className={utilStylesforDetail.addCommentButton} onClick={() => postCommentValidationCheck(json.id)}>投稿する</span>
                                     ) : (
                                         <span className={utilStylesforDetail.addCommentButton} onClick={() => handleLoginShow()}>投稿する</span>
                                     )}

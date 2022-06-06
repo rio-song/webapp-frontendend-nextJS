@@ -17,6 +17,7 @@ export default function UserPosts(props) {
 
   const [favos, setFavo] = useState();
   const [tapIndex, setTapIndex] = useState();
+  const [comments, setComments] = useState([]);
 
   const [postDetailShow, setPostDetailShow] = useState(false);
   const [postDetailResult, setPostDetailResult] = useState(null);
@@ -66,12 +67,14 @@ export default function UserPosts(props) {
         <ul className={userPost.list} >
           {result && <PostByUser result={result} setPostDetailShow={setPostDetailShow}
             setPostDetailResult={setPostDetailResult} loginStatus={props.loginStatus}
-            favos={favos} setFavo={setFavo} setTapIndex={setTapIndex} />}
+            favos={favos} setFavo={setFavo} setTapIndex={setTapIndex}
+            comments={comments} setComments={setComments} />}
         </ul >
         {postDetailResult && <PostDetail postDetailResult={postDetailResult}
           postDetailShow={postDetailShow} setPostDetailShow={setPostDetailShow}
           favos={favos} setFavo={setFavo} tapIndex={tapIndex} loginStatus={props.loginStatus}
-          topRefresh={props.topRefresh} setTopRefresh={props.setTopRefresh} />}
+          topRefresh={props.topRefresh} setTopRefresh={props.setTopRefresh}
+          comments={comments} setComments={setComments} />}
       </>)}
     </>)
 }

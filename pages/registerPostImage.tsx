@@ -2,6 +2,7 @@ import { Button, Modal, Row, Col, Form } from 'react-bootstrap'
 import { useState, useRef, useEffect } from 'react';
 import { PostImage } from '../type/api';
 import navbar from '../styles/navbar.module.css'
+import utilStyles from '../styles/utils.module.css'
 
 export default function RegisterPostImage(props) {
 
@@ -13,6 +14,30 @@ export default function RegisterPostImage(props) {
     //Imgの選択
     const [showImg, setShow] = useState(false);
     const [preview, setPreview] = useState('');
+
+    const [isTitleValidationError, setTitleIsValidationError] = useState<boolean>(false);
+
+    const [isCommentValidationError, setIsCommentValidationError] = useState<boolean>(false);
+    const registerPostValidationCheck = () => {
+
+        setTitleIsValidationError(false)
+        setIsCommentValidationError(false)
+
+
+        if (titleRef.current.value.length === 0) {
+            setTitleIsValidationError(true)
+        }
+        if (commentRef.current.value.length === 0) {
+            setIsCommentValidationError(true)
+        }
+
+        if (titleRef.current.value.length != 0 &&
+            commentRef.current.value.length != 0) {
+            getPostInfo()
+        }
+    }
+
+
 
     const show = props.registerImageShow;
     const handleClose = () => {
@@ -84,14 +109,15 @@ export default function RegisterPostImage(props) {
                             <Form >
                                 <Form.Group className={navbar.inputArea} >
                                     <input className={navbar.input} placeholder='タイトルを入力' ref={titleRef} type="text" />
+                                    {isTitleValidationError ? (<span className={utilStyles.text_error}>入力してください</span>) : (<></>)}
                                 </Form.Group>
 
                                 <Form.Group className={navbar.inputArea} >
                                     <textarea className={navbar.input} placeholder="コメントを入力" ref={commentRef} ></textarea>
-
+                                    {isCommentValidationError ? (<span className={utilStyles.text_error}>入力してください</span>) : (<></>)}
                                 </Form.Group>
                                 <span onClick={handleChangeFileAgain} className={navbar.return} >画像を変更する</span>
-                                <span onClick={getPostInfo} className={navbar.post}  >
+                                <span onClick={registerPostValidationCheck} className={navbar.post}  >
                                     投稿
                                 </span>
                             </Form>

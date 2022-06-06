@@ -1,6 +1,7 @@
 import { Button, Modal, Form } from 'react-bootstrap'
 import { Login } from '../type/api';
 import { useState, useEffect, useRef } from 'react'
+import utilStyles from '../styles/utils.module.css'
 
 export default function LoginPage(props) {
 
@@ -18,20 +19,33 @@ export default function LoginPage(props) {
         props.setLoginPopShow(false);
         props.setResisterUserPopShow(true);
     }
+    const [isEmailValidationError, setIsEmailValidationError] = useState<boolean>(false);
+    const [isPWValidationError, setIsPWValidationError] = useState<boolean>(false);
 
-    // const [emailValidation, setEmailvalidation] = useState();
-    // const [emailValidationText, setEmailvalidationText] = useState();
-    // const [pwValidation, setPwValidation] = useState();
-    // const [pwValidationText, setPwValidationText] = useState();
+    const loginValidationCheck = () => {
+        setIsError(false)
+        setIsEmailValidationError(false)
+        setIsPWValidationError(false)
+
+        if (emailRef.current.value.length === 0) {
+            setIsEmailValidationError(true)
+        }
+        if (passwordRef.current.value.length === 0) {
+            setIsPWValidationError(true)
+        }
+
+        if (
+            emailRef.current.value.length != 0 &&
+            passwordRef.current.value.length != 0
+        ) {
+            login()
+        }
+    }
 
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
 
     const login = () => {
-        // if (emailRef.match(/^([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$)/) {
-        // }
-        // if (passwordRef)
-
         async function fetchData() {
             const result = await Login(emailRef.current.value, passwordRef.current.value, setStatusCode);
             setResult(result);
@@ -64,8 +78,8 @@ export default function LoginPage(props) {
                             placeholder="name@example.com"
                             autoFocus
                         />
+                        {isEmailValidationError ? (<span className={utilStyles.text_error}>入力してください</span>) : (<></>)}
                     </Form.Group>
-                    {/* {emailValidation ? (<div className={utilStyles.validation}>{emailValidationText}</div>) : (<></>)} */}
                     <Form.Group
                         className="mb-3"
                         controlId="exampleForm.ControlTextarea1"
@@ -77,9 +91,9 @@ export default function LoginPage(props) {
                             placeholder=""
                             autoFocus
                         />
+                        {isPWValidationError ? (<span className={utilStyles.text_error}>入力してください</span>) : (<></>)}
                     </Form.Group>
                 </Form>
-                {/* {emailValidation ? (<div className={utilStyles.validation}>{pwValidationText}</div>) : (<></>)} */}
                 {isError ? (errorContent) : (<></>)}
                 <br></br>
             </Modal.Body>
@@ -87,7 +101,7 @@ export default function LoginPage(props) {
                 <Button onClick={handleResisterUser}>
                     <a>新規登録</a>
                 </Button>
-                <Button variant="primary" onClick={login}>
+                <Button variant="primary" onClick={loginValidationCheck}>
                     ログイン
                 </Button>
             </Modal.Footer>
