@@ -4,7 +4,8 @@
   border: transparent;
   resize: none;
   outline: none;
-  margin:10px 5px 20px ;
+  margin-top:10px;
+  padding-bottom: 10px;
 }
 .input::placeholder{
   font-size: 10pt;
@@ -21,7 +22,7 @@
   border-color:rgba(88, 86, 86, 0.2);
   resize: none;
   outline: none;
-  margin-bottom: 10px;
+  margin-top: 5px;
   margin-right: 5px;
 }
 .newPostArea{
@@ -43,5 +44,5 @@
   position:absolute;
   margin-right: 30px;
   right: 0px;
-  padding-top: 1px;
+  padding-top: 10px;
 }

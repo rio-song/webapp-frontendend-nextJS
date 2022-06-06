@@ -44,8 +44,10 @@ export default function Post(props) {
     async function fetchData() {
       const postDetailResult = await getPostDetail(id, setStatusCode);
       props.setPostDetailResult(postDetailResult);
-      const commentArray = postDetailResult.PostDetail.comments
-      props.setComments(commentArray)
+      if (postDetailResult.PostDetail != null) {
+        const commentArray = postDetailResult.PostDetail.comments
+        props.setComments(commentArray)
+      }
     }
     fetchData();
   }

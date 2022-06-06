@@ -47,6 +47,9 @@ export default function RegisterPostImage(props) {
         setPreview('')
         setErrorContent('')
         setSuccessContent('')
+        setTitleIsValidationError(false)
+        setIsCommentValidationError(false)
+
     };
 
     const handleChangeFile = (e) => {
@@ -59,6 +62,9 @@ export default function RegisterPostImage(props) {
         setPreview('');
         setErrorContent('')
         setSuccessContent('')
+        setTitleIsValidationError(false)
+        setIsCommentValidationError(false)
+
     };
     //Imgの投稿
     const titleRef = useRef(null);
@@ -109,13 +115,12 @@ export default function RegisterPostImage(props) {
                             <Form >
                                 <Form.Group className={navbar.inputArea} >
                                     <input className={navbar.input} placeholder='タイトルを入力' ref={titleRef} type="text" />
-                                    {isTitleValidationError ? (<span className={utilStyles.text_error}>入力してください</span>) : (<></>)}
                                 </Form.Group>
-
+                                {isTitleValidationError ? (<span className={utilStyles.text_error}>入力してください</span>) : (<></>)}
                                 <Form.Group className={navbar.inputArea} >
                                     <textarea className={navbar.input} placeholder="コメントを入力" ref={commentRef} ></textarea>
-                                    {isCommentValidationError ? (<span className={utilStyles.text_error}>入力してください</span>) : (<></>)}
                                 </Form.Group>
+                                {isCommentValidationError ? (<span className={utilStyles.text_error}>入力してください</span>) : (<></>)}
                                 <span onClick={handleChangeFileAgain} className={navbar.return} >画像を変更する</span>
                                 <span onClick={registerPostValidationCheck} className={navbar.post}  >
                                     投稿

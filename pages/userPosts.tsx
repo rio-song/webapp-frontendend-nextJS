@@ -21,6 +21,8 @@ export default function UserPosts(props) {
 
   const [postDetailShow, setPostDetailShow] = useState(false);
   const [postDetailResult, setPostDetailResult] = useState(null);
+  const [favosCount, setFavosCount] = useState();
+  const [commentsCount, setCommentsCount] = useState();
 
   const router = useRouter();
 
@@ -28,16 +30,20 @@ export default function UserPosts(props) {
 
   useEffect(() => {
     async function fetchData() {
-      if (router.query.input = "me") {
+      if (router.query.input === "me") {
         currentViewUserId = localStorage.getItem('userId')
       } else {
         currentViewUserId = localStorage.getItem('currentViewUserId')
       }
       const res = await getUserAllPosts(currentViewUserId, setStatusCode);
       setResult(res);
-      if (res != null) {
+      if (res.Post != null) {
         const favoArray = res.Post.map(post => (post.favoStatus))
         setFavo(favoArray)
+        const favosCountArray = res.Post.map(post => (post.favosCount))
+        setFavosCount(favosCountArray)
+        const commentCountArray = res.Post.map(post => (post.commentsCount))
+        setCommentsCount(commentCountArray)
       } else {
         setIsError(true);
         setErrorContent("表示できるコンテンツがありません。");
@@ -71,10 +77,11 @@ export default function UserPosts(props) {
             comments={comments} setComments={setComments} />}
         </ul >
         {postDetailResult && <PostDetail postDetailResult={postDetailResult}
-          postDetailShow={postDetailShow} setPostDetailShow={setPostDetailShow}
+          postDetailShow={postDetailShow} setPostDetailShow={setPostDetailShow} setLoginPopShow={props.setLoginPopShow}
           favos={favos} setFavo={setFavo} tapIndex={tapIndex} loginStatus={props.loginStatus}
           topRefresh={props.topRefresh} setTopRefresh={props.setTopRefresh}
-          comments={comments} setComments={setComments} />}
+          favosCount={favosCount} setFavosCount={setFavosCount} comments={comments} setComments={setComments}
+          commentsCount={commentsCount} setCommentsCount={setCommentsCount} />}
       </>)}
     </>)
 }

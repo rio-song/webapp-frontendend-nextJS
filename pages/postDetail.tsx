@@ -32,22 +32,26 @@ export default function PostDetail(props) {
     const closePostDetailShow = () => props.setPostDetailShow(false);
 
     const hundleNoFavo = (id) => {
+        console.log("きているかチャック１")
         let favo = [...props.favos]
         favo[props.tapIndex] = false
         props.setFavo(favo)
-
+        console.log("motonoいいねの数nai" + countFavo[props.tapIndex])
         countFavo[props.tapIndex] -= 1
+        console.log("いいねの数nai" + countFavo[props.tapIndex])
         props.setFavosCount(countFavo)
 
         deleteFavo(id)
     }
 
     const hundlefavo = (id) => {
+        console.log("きているかチャック２")
         let favo = [...props.favos]
         favo[props.tapIndex] = true
         props.setFavo(favo)
-
+        console.log("motonoいいねの数" + countFavo[props.tapIndex])
         countFavo[props.tapIndex] += 1
+        console.log("いいねの数" + countFavo[props.tapIndex])
         props.setFavosCount(countFavo)
 
         postFavo(id)

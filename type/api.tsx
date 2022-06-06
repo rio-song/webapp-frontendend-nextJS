@@ -40,8 +40,6 @@ export async function Login(email, password, setStatusCode) {
     const params = new URLSearchParams()
     params.append('email', email)
     params.append('password', hash)
-    console.log("email:" + email);
-    console.log("password:" + hash);
 
     const url = "http://localhost:8000/api/login";
 
@@ -130,15 +128,15 @@ export async function getPostsLogin(setStatusCode) {
 }
 
 export async function getUserAllPosts(userId, setStatusCode) {
-
     const url = "http://localhost:8000/api/post/user/userId/" + userId + "?count=5&lastPostId=null";
+
     const params = {
         method: "GET",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
-            "token": localStorage.getItem('token'),
         },
     };
+
     const response = await fetch(url, params);
     const body = await response.json();
     const statusCode = response.status
@@ -152,7 +150,6 @@ export async function getUserAllPosts(userId, setStatusCode) {
     }
 }
 export async function getPostDetail(id, setStatusCode) {
-    console.log("ssssss")
     const userId = localStorage.getItem('userId')
 
     const url = "http://localhost:8000/api/post/postId/" + id + "/userId/" + userId;
@@ -168,7 +165,6 @@ export async function getPostDetail(id, setStatusCode) {
     const statusCode = response.status
     setStatusCode(statusCode);
     if (statusCode === 200 || statusCode === 201) {
-        console.log("ssssss" + body)
         return body
     } else {
         return body.message

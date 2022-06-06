@@ -117,30 +117,49 @@ export default function EditProfile(props) {
             </Modal.Header>
             <Modal.Body>
                 <Form>
-                    <Form.Label>お名前(姓)</Form.Label>
-                    <Form.Control
-                        placeholder={json.familyName}
-                        autoFocus
-                        ref={familyNameRef}
-                    />
-                    {isFamilyNameValidationError ? (<span className={utilStyles.text_error}>入力してください</span>) : (<></>)}
-                    <Form.Label>お名前(名)</Form.Label>
-                    <Form.Control
-                        placeholder={json.firstName}
-                        autoFocus
-                        ref={firstNameRef}
-                    />
-                    {isFirstNameValidationError ? (<span className={utilStyles.text_error}>入力してください</span>) : (<></>)}
-                    <Form.Label>ニックネーム</Form.Label>
-                    <Form.Control
-                        placeholder={json.nickName}
-                        autoFocus
-                        ref={nickNameRef}
-                    />
-                    {isNickNameValidationError ? (<span className={utilStyles.text_error}>入力してください</span>) : (<></>)}
-                    <Form.Label>プロフィール画像</Form.Label>
-                    {json.imageUrl}
-
+                    <Form.Group
+                        className="mb-3"
+                        controlId="exampleForm.ControlTextarea1"
+                    >
+                        <Form.Label>お名前(姓)</Form.Label>
+                        <Form.Control
+                            placeholder={json.familyName}
+                            autoFocus
+                            ref={familyNameRef}
+                        />
+                        {isFamilyNameValidationError ? (<div className={utilStyles.text_error}>入力してください</div>) : (<></>)}
+                    </Form.Group>
+                    <Form.Group
+                        className="mb-3"
+                        controlId="exampleForm.ControlTextarea1"
+                    >
+                        <Form.Label>お名前(名)</Form.Label>
+                        <Form.Control
+                            placeholder={json.firstName}
+                            autoFocus
+                            ref={firstNameRef}
+                        />
+                        {isFirstNameValidationError ? (<div className={utilStyles.text_error}>入力してください</div>) : (<></>)}
+                    </Form.Group>
+                    <Form.Group
+                        className="mb-3"
+                        controlId="exampleForm.ControlTextarea1"
+                    >
+                        <Form.Label>ニックネーム</Form.Label>
+                        <Form.Control
+                            placeholder={json.nickName}
+                            autoFocus
+                            ref={nickNameRef}
+                        />
+                        {isNickNameValidationError ? (<div className={utilStyles.text_error}>入力してください</div>) : (<></>)}
+                    </Form.Group>
+                    <Form.Group
+                        className="mb-3"
+                        controlId="exampleForm.ControlTextarea1"
+                    >
+                        <Form.Label>プロフィール画像</Form.Label>
+                        {json.imageUrl}
+                    </Form.Group>
                     <Form.Group
                         className="mb-3"
                         controlId="exampleForm.ControlTextarea1"
@@ -169,8 +188,8 @@ export default function EditProfile(props) {
                         {isPWValidationError ? (<span className={utilStyles.text_error}>{validationPWErrorMessage}</span>) : (<></>)}
                     </Form.Group>
 
-                </Form>
-            </Modal.Body>
+                </Form >
+            </Modal.Body >
             <Modal.Footer>
                 <Button variant="secondary" onClick={() => handleCloseretuen()}>
                     戻る

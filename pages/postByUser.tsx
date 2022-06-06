@@ -3,7 +3,7 @@ import userPost from '../styles/userPost.module.css'
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { MdImageNotSupported } from "react-icons/md";
 import { useState, useEffect } from 'react';
-import { postFavo, deleteFavo, getPostDetail } from '../type/api';
+import { getPostDetail } from '../type/api';
 import React from 'react';
 import { Img } from 'react-image';
 import { IconContext } from "react-icons"
@@ -16,29 +16,16 @@ export default function PostByUser(props) {
     const [isError, setIsError] = useState(false);
     const [errorContent, setErrorContent] = useState("");
 
-    // const hundleNoFavo = (id, indexNum) => {
-    //     let favo = [...props.favos]
-    //     favo[indexNum] = false
-    //     props.setFavo(favo)
-    //     deleteFavo(id)
-    // }
-
-
-    // const hundlefavo = (id, indexNum) => {
-    //     let favo = [...props.favos]
-    //     favo[indexNum] = true
-    //     props.setFavo(favo)
-    //     postFavo(id)
-    // }
-
     const handlePostDetailShow = (id, indexNum) => {
         props.setPostDetailShow(true);
         props.setTapIndex(indexNum)
         async function fetchData() {
             const postDetailResult = await getPostDetail(id, setStatusCode);
             props.setPostDetailResult(postDetailResult);
-            const commentArray = postDetailResult.PostDetail.comments
-            props.setComments(commentArray)
+            if (postDetailResult.PostDetail != null) {
+                const commentArray = postDetailResult.PostDetail.comments
+                props.setComments(commentArray)
+            }
         }
         fetchData();
     }
