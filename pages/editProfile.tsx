@@ -1,7 +1,7 @@
 import { Button, Modal, Form } from 'react-bootstrap'
 import { putUser } from '../type/api'
 import { useState, useEffect, useRef } from 'react'
-
+import utilStyles from '../styles/utils.module.css'
 
 export default function EditProfile(props) {
     const show = props.editProfilePopShow;
@@ -23,7 +23,67 @@ export default function EditProfile(props) {
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
     const profileTextRef = useRef(null);
+    var emailRegexp = new RegExp(/^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/);
+    var pwRegexp = new RegExp(/^[0-9a-zA-Z].*$/);
 
+    const [isFamilyNameValidationError, setFamilyNameIsValidationError] = useState<boolean>(false);
+
+    const [isFirstNameValidationError, setIsFirstNameValidationError] = useState<boolean>(false);
+
+    const [isNickNameValidationError, setIsNickNameValidationError] = useState<boolean>(false);
+
+    const [isEmailValidationError, setIsEmailValidationError] = useState<boolean>(false);
+    const [validationEmailErrorMessage, setValidationEmailErrorMessage] = useState<string>("");
+    const [isPWValidationError, setIsPWValidationError] = useState<boolean>(false);
+    const [validationPWErrorMessage, setValidationPWErrorMessage] = useState<string>("");
+
+
+    const hundlePutUserValidationCheck = () => {
+
+        setFamilyNameIsValidationError(false)
+        setIsFirstNameValidationError(false)
+        setIsNickNameValidationError(false)
+        setIsEmailValidationError(false)
+        setIsPWValidationError(false)
+
+        if (familyNameRef.current.value.length === 0) {
+            setFamilyNameIsValidationError(true)
+        }
+        if (firstNameRef.current.value.length === 0) {
+            setIsFirstNameValidationError(true)
+        }
+        if (nickNameRef.current.value.length === 0) {
+            setIsNickNameValidationError(true)
+        }
+        if (emailRef.current.value.length === 0) {
+            setIsEmailValidationError(true)
+            setValidationEmailErrorMessage("入力してください")
+        } else if (emailRegexp.test(emailRef.current.value) === false) {
+            setIsEmailValidationError(true)
+            setValidationEmailErrorMessage("正しいメールアドレスを入力してください")
+        }
+        if (passwordRef.current.value.length === 0) {
+            setIsPWValidationError(true)
+            setValidationPWErrorMessage("入力してください")
+        } else if (pwRegexp.test(passwordRef.current.value) === false) {
+            setIsPWValidationError(true)
+            setValidationPWErrorMessage("英数字で入力してください")
+        } else if (passwordRef.current.value.length < 6) {
+            setIsPWValidationError(true)
+            setValidationPWErrorMessage("6文字以上で入力してください")
+        }
+
+        if (familyNameRef.current.value.length != 0 &&
+            firstNameRef.current.value.length != 0 &&
+            nickNameRef.current.value.length != 0 &&
+            emailRef.current.value.length != 0 &&
+            passwordRef.current.value.length >= 6 &&
+            pwRegexp.test(passwordRef.current.value) === true &&
+            pwRegexp.test(passwordRef.current.value) === true
+        ) {
+            hundlePutUser()
+        }
+    }
 
     const hundlePutUser = () => {
         async function fetchData() {
@@ -63,19 +123,21 @@ export default function EditProfile(props) {
                         autoFocus
                         ref={familyNameRef}
                     />
+                    {isFamilyNameValidationError ? (<span className={utilStyles.text_error}>入力してください</span>) : (<></>)}
                     <Form.Label>お名前(名)</Form.Label>
                     <Form.Control
                         placeholder={json.firstName}
                         autoFocus
                         ref={firstNameRef}
                     />
-
+                    {isFirstNameValidationError ? (<span className={utilStyles.text_error}>入力してください</span>) : (<></>)}
                     <Form.Label>ニックネーム</Form.Label>
                     <Form.Control
                         placeholder={json.nickName}
                         autoFocus
                         ref={nickNameRef}
                     />
+                    {isNickNameValidationError ? (<span className={utilStyles.text_error}>入力してください</span>) : (<></>)}
                     <Form.Label>プロフィール画像</Form.Label>
                     {json.imageUrl}
 
@@ -95,6 +157,7 @@ export default function EditProfile(props) {
                             autoFocus
                             ref={emailRef}
                         />
+                        {isEmailValidationError ? (<span className={utilStyles.text_error}>{validationEmailErrorMessage}</span>) : (<></>)}
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                         <Form.Label>Password</Form.Label>
@@ -103,6 +166,7 @@ export default function EditProfile(props) {
                             autoFocus
                             ref={passwordRef}
                         />
+                        {isPWValidationError ? (<span className={utilStyles.text_error}>{validationPWErrorMessage}</span>) : (<></>)}
                     </Form.Group>
 
                 </Form>
@@ -111,7 +175,7 @@ export default function EditProfile(props) {
                 <Button variant="secondary" onClick={() => handleCloseretuen()}>
                     戻る
                 </Button>
-                <Button variant="primary" onClick={() => hundlePutUser()}>
+                <Button variant="primary" onClick={() => hundlePutUserValidationCheck()}>
                     変更
                 </Button>
             </Modal.Footer>
