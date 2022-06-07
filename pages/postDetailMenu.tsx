@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 import { deletePost } from '../type/api';
 import utilStylesforDetail from '../styles/postDetail.module.css'
 

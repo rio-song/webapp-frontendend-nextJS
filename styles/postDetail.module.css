@@ -129,6 +129,7 @@
   font-weight: bold;
   font:BlinkMacSystemFont;
   width: 20%;
+  cursor: pointer; 
 }
 
 .detailMenus{

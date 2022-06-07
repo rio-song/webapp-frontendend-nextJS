@@ -2,6 +2,7 @@ import { Button, Modal, Form } from 'react-bootstrap'
 import { putUser } from '../type/api'
 import { useState, useEffect, useRef } from 'react'
 import utilStyles from '../styles/utils.module.css'
+import navbar from '../styles/navbar.module.css'
 
 export default function EditProfile(props) {
     const show = props.editProfilePopShow;
@@ -33,7 +34,7 @@ export default function EditProfile(props) {
     const [validationPWErrorMessage, setValidationPWErrorMessage] = useState<string>("");
 
     const [showImg, setShow] = useState(false);
-    const [preview, setPreview] = useState('');
+    const [preview, setPreview] = useState(json.imageUrl);
 
     const hundlePutUserValidationCheck = () => {
 
@@ -181,12 +182,17 @@ export default function EditProfile(props) {
                         controlId="exampleForm.ControlTextarea1"
                     >
                         <Form.Label>プロフィール画像</Form.Label>
-                        {showImg ? (<img src={preview} />) : (<> {json.imageUrl}<input
-                            type="file"
-                            accept="image/*"
-                            required
-                            onChange={handleChangeFile}
-                        /></>)}
+                        {showImg ? (<img src={preview} />
+                        ) : (
+                            <div>{json.imageUrl}<div>
+                                <label className={navbar.file}>
+                                    写真を選択する
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        required
+                                        onChange={handleChangeFile} />
+                                </label></div></div>)}
                     </Form.Group>
                     <Form.Group
                         className="mb-3"

@@ -131,6 +131,7 @@
   color: #8E8E8E;
   font-size: 14px;
   font:BlinkMacSystemFont;
+  cursor: pointer; 
 }
 
 .text6{
@@ -174,4 +175,5 @@
 .userArea{
   padding-top:7px ;
   padding-bottom:7px ;
+  cursor: pointer; 
 }

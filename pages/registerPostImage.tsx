@@ -130,12 +130,14 @@ export default function RegisterPostImage(props) {
                         </Col>
                     </Row>
                 ) : (
-                    <input
-                        type="file"
-                        accept="image/*"
-                        required
-                        onChange={handleChangeFile}
-                    />)}
+                    <label className={navbar.file}>
+                        写真を選択する
+                        <input
+                            type="file"
+                            accept="image/*"
+                            required
+                            onChange={handleChangeFile}
+                        /></label>)}
             </Modal.Body>
         </Modal >
     );
