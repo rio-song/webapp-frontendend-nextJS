@@ -16,6 +16,7 @@ export default function CommentMenu(props) {
 
     const handleClose = () => {
         props.setCommentMenuShow(false)
+        props.setOverlay(false)
     }
 
     const handleCommentDelete = () => {
@@ -68,7 +69,7 @@ export default function CommentMenu(props) {
 
 
     return (
-        <Modal show={props.commentMenuShow} onHide={handleClose} animation={false} centered size="sm">
+        <Modal show={props.commentMenuShow} onHide={handleClose} animation={false} centered size="sm" >
             <Modal.Body className={utilStylesforDetail.detailMenus} >
                 <div onClick={() => handleCommentDelete()} className={utilStylesforDetail.detailMenu1}>
                     コメント削除

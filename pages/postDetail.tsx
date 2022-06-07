@@ -22,6 +22,7 @@ export default function PostDetail(props) {
     const [getCommentResult, setGetCommentResult] = useState();
     const [isError, setIsError] = useState(false);
     const [errorContent, setErrorContent] = useState("");
+    const [overlay, setOverlay] = useState(false);
 
     let json = props.postDetailResult.PostDetail;
     const userId = localStorage.getItem('userId')
@@ -55,6 +56,7 @@ export default function PostDetail(props) {
     const [postMenuShow, setPostMenuShow] = useState(false);
     const [postId, setPostId] = useState({});
     const hundlePostMenu = (id) => {
+        setOverlay(true)
         setPostMenuShow(true)
         setPostId(id)
     }
@@ -62,6 +64,7 @@ export default function PostDetail(props) {
     const [commentMenuShow, setCommentMenuShow] = useState(false);
     const [commentId, setCommentId] = useState({});
     const hundleCommentMenu = (commentId) => {
+        setOverlay(true)
         setCommentMenuShow(true)
         setCommentId(commentId)
     }
@@ -232,17 +235,20 @@ export default function PostDetail(props) {
                         </Row>
                     </Container>
                 </Modal.Body>
+                {overlay ? (<div className={utilStylesforDetail.overlay}></div>) : (<></>)}
             </Modal >
             <CommentMenu
                 commentMenuShow={commentMenuShow} setCommentMenuShow={setCommentMenuShow}
                 commentId={commentId} loginStatus={props.loginStatus} postId={postId}
                 commentsCount={props.commentsCount} setCommentsCount={props.setCommentsCount}
-                tapIndex={props.tapIndex} comments={props.comments} setComments={props.setComments} />
+                tapIndex={props.tapIndex} comments={props.comments} setComments={props.setComments}
+                setOverlay={setOverlay} />
             <PostDetailMenu postMenuShow={postMenuShow}
                 setPostMenuShow={setPostMenuShow} postId={postId}
                 loginStatus={props.loginStatus} tapIndex={props.tapIndex}
                 topRefresh={props.topRefresh} setTopRefresh={props.setTopRefresh}
-                setPostDetailShow={props.setPostDetailShow} />
+                setPostDetailShow={props.setPostDetailShow}
+                setOverlay={setOverlay} />
         </>
     );
 }

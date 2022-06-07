@@ -12,6 +12,7 @@ export default function PostDetailMenu(props) {
     const [errorContent, setErrorContent] = useState("");
 
     const handleClose = () => {
+        props.setOverlay(false)
         props.setPostMenuShow(false)
     }
 
