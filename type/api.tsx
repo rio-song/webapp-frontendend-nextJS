@@ -383,7 +383,7 @@ export async function getUser(setStatusCode) {
     }
 }
 
-export async function putUser(familyName, firstName, nickName, email, password, profileText, setStatusCode) {
+export async function putUser(familyName, firstName, nickName, imageUrl, email, password, profileText, setStatusCode) {
     var SHA256 = require("crypto-js/sha256");
     const hash = SHA256(password).toString();
 
@@ -394,7 +394,7 @@ export async function putUser(familyName, firstName, nickName, email, password, 
     params.append('firstName', firstName)
     params.append('familyName', familyName)
     params.append('nickName', nickName)
-    params.append('imageUrl', '')
+    params.append('imageUrl', imageUrl)
     params.append('profileText', profileText)
     params.append('email', email)
     params.append('password', hash)

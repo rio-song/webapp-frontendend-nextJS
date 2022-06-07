@@ -37,7 +37,7 @@ export default function UserPosts(props) {
       }
       const res = await getUserAllPosts(currentViewUserId, setStatusCode);
       setResult(res);
-      if (res.Post != null) {
+      if (res != null && res.Post != null) {
         const favoArray = res.Post.map(post => (post.favoStatus))
         setFavo(favoArray)
         const favosCountArray = res.Post.map(post => (post.favosCount))

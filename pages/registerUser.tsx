@@ -159,7 +159,7 @@ export default function ResisterUser(props) {
                         {isPWValidationError ? (<span className={utilStyles.text_error}>{validationPWErrorMessage}</span>) : (<></>)}
                     </Form.Group>
                 </Form>
-                {isError ? (errorContent) : (<></>)}
+                {isError ? (<span className={utilStyles.text_error}>{errorContent}</span>) : (<></>)}
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="primary" onClick={registerUserValidationCheck}>

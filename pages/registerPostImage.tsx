@@ -121,13 +121,12 @@ export default function RegisterPostImage(props) {
                                     <textarea className={navbar.input} placeholder="コメントを入力" ref={commentRef} ></textarea>
                                 </Form.Group>
                                 {isCommentValidationError ? (<span className={utilStyles.text_error}>入力してください</span>) : (<></>)}
+                                {isError ? (<span className={utilStyles.text_error}>{errorContent}</span>) : (<></>)}
                                 <span onClick={handleChangeFileAgain} className={navbar.return} >画像を変更する</span>
                                 <span onClick={registerPostValidationCheck} className={navbar.post}  >
                                     投稿
                                 </span>
                             </Form>
-                            {/* <p> {isError ? (errorContent) : (<></>)}
-                                {successContent}</p> */}
                         </Col>
                     </Row>
                 ) : (

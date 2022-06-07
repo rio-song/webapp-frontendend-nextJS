@@ -6,11 +6,6 @@ import utilStyles from '../styles/utils.module.css'
 export default function EditProfile(props) {
     const show = props.editProfilePopShow;
     const json = props.viewProfileResult.User;
-    const handleClose = () => { props.setEditProfilePopShow(false) };
-    const handleCloseretuen = () => {
-        props.setEditProfilePopShow(false)
-        props.setViewProfileShow(true)
-    };
 
     const [result, setResult] = useState();
     const [statusCode, setStatusCode] = useState();
@@ -37,6 +32,8 @@ export default function EditProfile(props) {
     const [isPWValidationError, setIsPWValidationError] = useState<boolean>(false);
     const [validationPWErrorMessage, setValidationPWErrorMessage] = useState<string>("");
 
+    const [showImg, setShow] = useState(false);
+    const [preview, setPreview] = useState('');
 
     const hundlePutUserValidationCheck = () => {
 
@@ -87,7 +84,7 @@ export default function EditProfile(props) {
 
     const hundlePutUser = () => {
         async function fetchData() {
-            const result = await putUser(familyNameRef.current.value, firstNameRef.current.value, nickNameRef.current.value,
+            const result = await putUser(familyNameRef.current.value, firstNameRef.current.value, nickNameRef.current.value, preview,
                 emailRef.current.value, profileTextRef.current.value, profileTextRef.current.value, setStatusCode);
             setResult(result);
         }
@@ -109,7 +106,33 @@ export default function EditProfile(props) {
         }
     }, [statusCode, result])
 
+    const handleChangeFile = (e) => {
+        setShow(true);
+        const { files } = e.target;
+        setPreview(window.URL.createObjectURL(files[0]));
+    };
 
+    const handleClose = () => {
+        props.setEditProfilePopShow(false)
+        setFamilyNameIsValidationError(false)
+        setIsFirstNameValidationError(false)
+        setIsNickNameValidationError(false)
+        setIsEmailValidationError(false)
+        setIsPWValidationError(false)
+        setShow(false)
+        setPreview('')
+    };
+    const handleCloseretuen = () => {
+        props.setEditProfilePopShow(false)
+        props.setViewProfileShow(true)
+        setFamilyNameIsValidationError(false)
+        setIsFirstNameValidationError(false)
+        setIsNickNameValidationError(false)
+        setIsEmailValidationError(false)
+        setIsPWValidationError(false)
+        setShow(false)
+        setPreview('')
+    };
     return (
         < Modal show={show} onHide={handleClose} >
             <Modal.Header closeButton>
@@ -158,7 +181,12 @@ export default function EditProfile(props) {
                         controlId="exampleForm.ControlTextarea1"
                     >
                         <Form.Label>プロフィール画像</Form.Label>
-                        {json.imageUrl}
+                        {showImg ? (<img src={preview} />) : (<> {json.imageUrl}<input
+                            type="file"
+                            accept="image/*"
+                            required
+                            onChange={handleChangeFile}
+                        /></>)}
                     </Form.Group>
                     <Form.Group
                         className="mb-3"
@@ -187,8 +215,8 @@ export default function EditProfile(props) {
                         />
                         {isPWValidationError ? (<span className={utilStyles.text_error}>{validationPWErrorMessage}</span>) : (<></>)}
                     </Form.Group>
-
                 </Form >
+                {isError ? (<span className={utilStyles.text_error}>{errorContent}</span>) : (<></>)}
             </Modal.Body >
             <Modal.Footer>
                 <Button variant="secondary" onClick={() => handleCloseretuen()}>

@@ -94,7 +94,7 @@ export default function LoginPage(props) {
                         {isPWValidationError ? (<span className={utilStyles.text_error}>入力してください</span>) : (<></>)}
                     </Form.Group>
                 </Form>
-                {isError ? (errorContent) : (<></>)}
+                {isError ? (<span className={utilStyles.text_error}>{errorContent}</span>) : (<></>)}
                 <br></br>
             </Modal.Body>
             <Modal.Footer>

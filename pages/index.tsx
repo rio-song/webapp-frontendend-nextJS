@@ -48,7 +48,7 @@ export default function Home(props) {
         setPostResult(res);
       }
 
-      if (res.Post != null) {
+      if (res != null && res.Post != null) {
         const favoArray = res.Post.map(post => (post.favoStatus))
         setFavo(favoArray)
         const favosCountArray = res.Post.map(post => (post.favosCount))

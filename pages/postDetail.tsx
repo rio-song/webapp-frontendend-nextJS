@@ -26,36 +26,32 @@ export default function PostDetail(props) {
     let json = props.postDetailResult.PostDetail;
     const userId = localStorage.getItem('userId')
 
-    let countFavo = [...props.favos]
-    countFavo[props.tapIndex] = json.favosCount
-
     const closePostDetailShow = () => props.setPostDetailShow(false);
 
     const hundleNoFavo = (id) => {
-        console.log("きているかチャック１")
         let favo = [...props.favos]
         favo[props.tapIndex] = false
         props.setFavo(favo)
-        console.log("motonoいいねの数nai" + countFavo[props.tapIndex])
+
+        let countFavo = [...props.favosCount]
         countFavo[props.tapIndex] -= 1
-        console.log("いいねの数nai" + countFavo[props.tapIndex])
         props.setFavosCount(countFavo)
 
         deleteFavo(id)
     }
 
     const hundlefavo = (id) => {
-        console.log("きているかチャック２")
         let favo = [...props.favos]
         favo[props.tapIndex] = true
         props.setFavo(favo)
-        console.log("motonoいいねの数" + countFavo[props.tapIndex])
+
+        let countFavo = [...props.favosCount]
         countFavo[props.tapIndex] += 1
-        console.log("いいねの数" + countFavo[props.tapIndex])
         props.setFavosCount(countFavo)
 
         postFavo(id)
     }
+
     const [postMenuShow, setPostMenuShow] = useState(false);
     const [postId, setPostId] = useState({});
     const hundlePostMenu = (id) => {
@@ -83,6 +79,7 @@ export default function PostDetail(props) {
         async function fetchData() {
             setPostId(postId)
             const result = await postComment(postId, commentRef.current.value, setPostCommentStatusCode);
+            setPostCommentResult(result)
         }
         fetchData()
     }
@@ -133,7 +130,7 @@ export default function PostDetail(props) {
     return (
         <>
             <Modal show={props.postDetailShow} onHide={closePostDetailShow} size="xl"
-                aria-labelledby="contained-modal-title-vcenter">
+                aria-labelledby="contained-modal-title-vcenter"  >
                 <Modal.Body>
                     <Container>
                         <Row>
