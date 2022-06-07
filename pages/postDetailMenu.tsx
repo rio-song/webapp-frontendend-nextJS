@@ -46,7 +46,7 @@ export default function PostDetailMenu(props) {
         <Modal show={props.postMenuShow} onHide={handleClose} animation={false} centered size="sm">
             <Modal.Body className={utilStylesforDetail.detailMenus}>
                 <div onClick={() => handlePostDelete()} className={utilStylesforDetail.detailMenu1} >
-                    コメント削除
+                    この投稿を削除
                 </div>
                 <div onClick={handleClose} className={utilStylesforDetail.detailMenu2}>
                     閉じる
