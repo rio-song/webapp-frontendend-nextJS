@@ -7,10 +7,10 @@ import RegisterPostImage from './registerPostImage'
 import LoginPage from './loginPage'
 import ResisterUser from './registerUser'
 import { CgProfile } from "react-icons/cg";
-import utilStyles from '../styles/utils.module.css'
 import { IconContext } from "react-icons"
 import { getUser, Logout } from '../type/api';
 import { useRouter } from 'next/router';
+import navbar from '../styles/navbar.module.css'
 
 export default function Navibar(props) {
     const [viewProfileShow, setViewProfileShow] = useState(false);
@@ -79,13 +79,13 @@ export default function Navibar(props) {
             <Navbar bg="light" expand="lg" fixed="top">
                 <Container>
                     <Navbar.Brand href="/">App</Navbar.Brand>
-                    <div className={utilStyles.navIcons}>
+                    <div className={navbar.navIcons}>
                         <IconContext.Provider value={{ color: '#262626', size: '30px' }}>
                             {props.loginStatus ? (
                                 <>
-                                    <BsFillHouseDoorFill className={utilStyles.icon} onClick={() => handleMyPostPage()} />
-                                    <FiPlusSquare className={utilStyles.icon} onClick={() => handleRegisterImageShow()} />
-                                    <NavDropdown title={<CgProfile className={utilStyles.icon} />} >
+                                    <BsFillHouseDoorFill className={navbar.icon} onClick={() => handleMyPostPage()} />
+                                    <FiPlusSquare onClick={() => handleRegisterImageShow()} />
+                                    <NavDropdown title={<CgProfile />} >
                                         <NavDropdown.Item onClick={() => handleMyPostPage()}>マイページ</NavDropdown.Item>
                                         <NavDropdown.Item onClick={() => handleViewProfileShow()}>プロフィールの確認</NavDropdown.Item>
                                         <NavDropdown.Divider />

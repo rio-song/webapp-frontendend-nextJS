@@ -167,11 +167,7 @@
   font-size: 10px;
   font:BlinkMacSystemFont;
 }
-.navIcons{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 .userArea{
   padding-top:7px ;
   padding-bottom:7px ;

@@ -39,6 +39,7 @@
   color: #8E8E8E;
   font-size: 12px;
   font:BlinkMacSystemFont;
+  cursor: pointer; 
 }
 
 
@@ -135,6 +136,7 @@
 .detailMenus{
   text-align:  center;
   padding: 0;
+  cursor: pointer; 
 }
 .detailMenu1{
   border: 1px solid;
@@ -144,6 +146,7 @@
   border-color:rgba(0,0,0,.2);
   padding-top:20px;
   padding-bottom:20px;
+  cursor: pointer; 
 }
 
 .detailMenu2{

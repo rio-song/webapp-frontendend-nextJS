@@ -63,3 +63,14 @@
 .file input {
   display: none;
 }
+.icon{
+  margin: 0px 20px 0px;
+  color: #262626;
+}
+
+.navIcons{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 40px;
+}

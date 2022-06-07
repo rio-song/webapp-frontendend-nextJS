@@ -1,4 +1,4 @@
-import { Button, Modal, Row, Col, Form } from 'react-bootstrap'
+import { Modal, Row, Col, Form } from 'react-bootstrap'
 import { useState, useRef, useEffect } from 'react';
 import { PostImage } from '../type/api';
 import navbar from '../styles/navbar.module.css'

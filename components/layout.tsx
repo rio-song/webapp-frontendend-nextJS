@@ -9,7 +9,6 @@ export const siteTitle = 'App'
 export default function Layout({ children, home }) {
 
   return (
-    // <meta name="viewport"  >
     <div className={styles.container}>
       <Head>
         <link rel="icon" href="/favicon.ico" />
@@ -31,44 +30,7 @@ export default function Layout({ children, home }) {
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       />
-      {/* <header className={styles.header}>
-      {/* {home ? (
-          <>
-          </>
-        ) : (
-          <>
-            <Link href="/">
-              <a>
-                <Image
-                  priority
-                  src="/images/profile.jpg"
-                  className={utilStyles.borderCircle}
-                  height={108}
-                  width={108}
-                  alt={name}
-                />
-              </a>
-            </Link>
-            <h2 className={utilStyles.headingLg}>
-              <Link href="/">
-                <a className={utilStyles.colorInherit}>{name}</a>
-              </Link>
-            </h2>
-          </>
-        )} */}
-      {/*      
-    </header>  */}
       < main > {children}</main >
-      {/* {
-        !home && (
-          <div className={styles.backToHome}>
-            <Link href="/">
-              <a>戻る</a>
-            </Link>
-          </div>
-        )
-      } */}
     </div >
-    // </meta >
   )
 }
