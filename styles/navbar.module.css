@@ -1,0 +1,76 @@
+
+.input{
+  color: #262626;
+  border: transparent;
+  resize: none;
+  outline: none;
+  margin-top:10px;
+  padding-bottom: 10px;
+}
+.input::placeholder{
+  font-size: 10pt;
+  color: #8E8E8E;
+  font:BlinkMacSystemFont;
+}
+
+.inputArea{
+  color: #262626;
+  border: 1px solid;
+  border-top: transparent;
+  border-left: transparent;
+  border-right: transparent;
+  border-color:rgba(88, 86, 86, 0.2);
+  resize: none;
+  outline: none;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+.newPostArea{
+  padding: 0;
+  margin: 0;
+}
+.return{
+  color: #262626;
+  font-size: 14px;
+  position:absolute;
+  margin-right: 30px;
+  right: 0px;
+  bottom: 0px;
+  margin-bottom: 20px;
+  cursor: pointer; 
+}
+.post{
+  color: #262626;
+  font-size: 16px;
+  position:absolute;
+  margin-right: 30px;
+  right: 0px;
+  padding-top: 10px;
+  cursor: pointer; 
+}
+.file{
+  display: inline-block;
+  cursor: pointer; 
+  margin: 1em 0; 
+  padding: .7em 1em; 
+  line-height: 1; 
+  background: #0b5ed7;
+  color: #FFF; 
+  font-size: 0.95em;
+  border-radius: 0.3em; 
+  transition: 0.2s; 
+}
+.file input {
+  display: none;
+}
+.icon{
+  margin: 0px 20px 0px;
+  color: #262626;
+}
+
+.navIcons{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 40px;
+}

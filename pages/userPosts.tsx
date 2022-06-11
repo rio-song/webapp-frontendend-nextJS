@@ -1,53 +1,42 @@
 import Layout from '../components/layout'
 import NestedLayout from '../components/layout'
-import utilStyles from '../styles/utils.module.css'
-import Post from './post'
+import userPost from '../styles/userPost.module.css'
+import { getUserAllPosts } from '../type/api'
 import { useState, useEffect } from 'react'
+import PostByUser from './postByUser'
 import PostDetail from './postDetail'
-import { getPosts, getPostsLogin } from '../type/api'
 import { useRouter } from 'next/router';
+import UserPostsTop from './userPostsTop'
 
-export default function Home(props) {
-  //各Postの表示
-  const [postResult, setPostResult] = useState(null);
-  //詳細画面の表示
-  const [postDetailShow, setPostDetailShow] = useState(false);
-  const [postDetailResult, setPostDetailResult] = useState();
+export default function UserPosts(props) {
 
+  const [result, setResult] = useState();
   const [statusCode, setStatusCode] = useState();
   const [isError, setIsError] = useState(false);
   const [errorContent, setErrorContent] = useState("");
 
   const [favos, setFavo] = useState();
+  const [tapIndex, setTapIndex] = useState();
   const [comments, setComments] = useState([]);
 
+  const [postDetailShow, setPostDetailShow] = useState(false);
+  const [postDetailResult, setPostDetailResult] = useState(null);
   const [favosCount, setFavosCount] = useState();
   const [commentsCount, setCommentsCount] = useState();
-  const [tapIndex, setTapIndex] = useState();
 
   const router = useRouter();
 
-  const handlePagePostByUser = (userId) => {
-    localStorage.setItem('currentViewUserId', userId);
-    router.push({
-      pathname: "/userPosts"
-    });
-  }
+  let currentViewUserId;
 
   useEffect(() => {
     async function fetchData() {
-      const token = localStorage.getItem('token')
-      setIsError(false)
-
-      let res
-      if (token !== null) {
-        res = await getPostsLogin(setStatusCode);
-        setPostResult(res);
+      if (router.query.input === "me") {
+        currentViewUserId = localStorage.getItem('userId')
       } else {
-        res = await getPosts(setStatusCode);
-        setPostResult(res);
+        currentViewUserId = localStorage.getItem('currentViewUserId')
       }
-
+      const res = await getUserAllPosts(currentViewUserId, setStatusCode);
+      setResult(res);
       if (res != null && res.Post != null) {
         const favoArray = res.Post.map(post => (post.favoStatus))
         setFavo(favoArray)
@@ -61,49 +50,46 @@ export default function Home(props) {
       }
     }
     fetchData();
-  }, [props.loginStatus, props.topRefresh]);
+  }, []);
 
   useEffect(() => {
     if (statusCode === 200 || statusCode === 201) {
       setIsError(false)
     } else if (statusCode === 400) {
       setIsError(true);
-      setErrorContent(postResult);
+      setErrorContent(result);
       localStorage.clear()
       props.setLoginStatus(false);
     } else {
       setIsError(true);
-      setErrorContent(postResult);
+      setErrorContent(result);
     }
-  }, [statusCode, postResult])
+  }, [statusCode, result])
 
   return (
-    <><br />
-      {isError ? (<><br /><br /><br /><br />{errorContent}</>) : (<>
-        <ul className={utilStyles.list} >
-          {postResult && <Post postResult={postResult} setPostDetailShow={setPostDetailShow}
+    <><br /><br /><br /><br />
+      {isError ? (errorContent) : (<>
+        {result && < UserPostsTop result={result} />}
+        <ul className={userPost.list} >
+          {result && <PostByUser result={result} setPostDetailShow={setPostDetailShow}
             setPostDetailResult={setPostDetailResult} loginStatus={props.loginStatus}
-            setLoginPopShow={props.setLoginPopShow}
             favos={favos} setFavo={setFavo} setTapIndex={setTapIndex}
-            handlePagePostByUser={handlePagePostByUser}
-            favosCount={favosCount} setFavosCount={setFavosCount}
-            commentsCount={commentsCount} comments={comments} setComments={setComments} />}
+            comments={comments} setComments={setComments} />}
         </ul >
         {postDetailResult && <PostDetail postDetailResult={postDetailResult}
           postDetailShow={postDetailShow} setPostDetailShow={setPostDetailShow} setLoginPopShow={props.setLoginPopShow}
           favos={favos} setFavo={setFavo} tapIndex={tapIndex} loginStatus={props.loginStatus}
           topRefresh={props.topRefresh} setTopRefresh={props.setTopRefresh}
           favosCount={favosCount} setFavosCount={setFavosCount} comments={comments} setComments={setComments}
-          commentsCount={commentsCount} setCommentsCount={setCommentsCount} />
-        } </>
-      )
-      }</>)
+          commentsCount={commentsCount} setCommentsCount={setCommentsCount} />}
+      </>)}
+    </>)
 }
 
-Home.getLayout = function getLayout(home, props) {
+UserPosts.getLayout = function getLayout(userPosts, props) {
   return (
-    <Layout home>
-      <NestedLayout home>{home}</NestedLayout>
+    <Layout userPosts>
+      <NestedLayout userPosts>{userPosts}</NestedLayout>
     </Layout >
   )
 }
