@@ -88,8 +88,8 @@ export default function UserPosts(props) {
 
 UserPosts.getLayout = function getLayout(userPosts, props) {
   return (
-    <Layout userPosts>
-      <NestedLayout userPosts>{userPosts}</NestedLayout>
+    <Layout home>
+      <NestedLayout home>{userPosts}</NestedLayout>
     </Layout >
   )
 }
