@@ -1,7 +1,7 @@
 import { Button, Modal, Form } from 'react-bootstrap'
-import { registerUserInfo } from '../type/api'
+import { registerUserInfo } from '../../lib/api'
 import { useState, useEffect, useRef } from 'react'
-import utilStyles from '../styles/utils.module.css'
+import utilStyles from '../../styles/utils.module.css'
 
 export default function ResisterUser(props) {
 

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import React from 'react';
 import { Modal } from 'react-bootstrap'
-import { deletePost } from '../type/api';
-import utilStylesforDetail from '../styles/postDetail.module.css'
+import { deletePost } from '../../lib/api';
+import utilStylesforDetail from '../../styles/postDetail.module.css'
 
 export default function PostDetailMenu(props) {
 
@@ -27,6 +27,7 @@ export default function PostDetailMenu(props) {
         if (statusCode === 200 || statusCode === 201) {
             props.setPostMenuShow(false)
             props.setPostDetailShow(false);
+            props.setOverlay(false)
             const newPostResult = props.topRefresh ? false : true
             props.setTopRefresh(newPostResult)
         } else if (statusCode === 400) {

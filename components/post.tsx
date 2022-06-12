@@ -5,13 +5,14 @@ import { MdImageNotSupported } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { FaRegComment } from "react-icons/fa";
 import { useState, useEffect } from 'react';
-import { postFavo, deleteFavo, getPostDetail } from '../type/api';
+import { postFavo, deleteFavo, getPostDetail } from '../lib/api';
 import React from 'react';
 import { Img } from 'react-image';
 import { IconContext } from "react-icons"
-import { DataChange } from '../type/util';
+import { DataChange } from '../lib/util';
 
 export default function Post(props) {
+
   const json = props.postResult.Post;
   const [statusCode, setStatusCode] = useState();
   const [isError, setIsError] = useState(false);
@@ -44,6 +45,7 @@ export default function Post(props) {
     async function fetchData() {
       const postDetailResult = await getPostDetail(id, setStatusCode);
       props.setPostDetailResult(postDetailResult);
+
       if (postDetailResult != null && postDetailResult.PostDetail != null) {
         const commentArray = postDetailResult.PostDetail.comments
         props.setComments(commentArray)
@@ -51,6 +53,7 @@ export default function Post(props) {
     }
     fetchData();
   }
+
   useEffect(() => {
     if (statusCode === 200 || statusCode === 201) {
       setIsError(false)

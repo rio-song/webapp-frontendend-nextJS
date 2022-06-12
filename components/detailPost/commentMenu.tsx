@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import React from 'react';
 import { Modal } from 'react-bootstrap'
-import { deleteComment, getComment } from '../type/api';
-import utilStylesforDetail from '../styles/postDetail.module.css'
+import { deleteComment, getComment } from '../../lib/api';
+import utilStylesforDetail from '../../styles/postDetail.module.css'
 
 
 export default function CommentMenu(props) {
@@ -42,6 +42,7 @@ export default function CommentMenu(props) {
             let countComment = [...props.commentsCount]
             countComment[props.tapIndex] -= 1
             props.setCommentsCount(countComment)
+            props.setOverlay(false)
             hundleGetComment()
         } else if (deletestatusCode === 400) {
             setIsError(true);

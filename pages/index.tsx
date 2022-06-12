@@ -1,13 +1,15 @@
 import Layout from '../components/layout'
 import NestedLayout from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
-import Post from './post'
+import Post from '../components/post'
 import { useState, useEffect } from 'react'
-import PostDetail from './postDetail'
-import { getPosts, getPostsLogin } from '../type/api'
+import PostDetail from '../components/detailPost/postDetail'
+import { getPosts, getPostsLogin } from '../lib/api'
 import { useRouter } from 'next/router';
+// import { usePost, usePostDetail } from '../hooks/post'
 
 export default function Home(props) {
+
   //各Postの表示
   const [postResult, setPostResult] = useState(null);
   //詳細画面の表示
@@ -81,9 +83,12 @@ export default function Home(props) {
     <><br />
       {isError ? (<><br /><br /><br /><br />{errorContent}</>) : (<>
         <ul className={utilStyles.list} >
-          {postResult && <Post postResult={postResult} setPostDetailShow={setPostDetailShow}
-            setPostDetailResult={setPostDetailResult} loginStatus={props.loginStatus}
+          {postResult && <Post postResult={postResult}
+            loginStatus={props.loginStatus}
             setLoginPopShow={props.setLoginPopShow}
+            setPostDetailShow={setPostDetailShow}
+            setPostDetailResult={setPostDetailResult}
+
             favos={favos} setFavo={setFavo} setTapIndex={setTapIndex}
             handlePagePostByUser={handlePagePostByUser}
             favosCount={favosCount} setFavosCount={setFavosCount}
@@ -95,8 +100,8 @@ export default function Home(props) {
           topRefresh={props.topRefresh} setTopRefresh={props.setTopRefresh}
           favosCount={favosCount} setFavosCount={setFavosCount} comments={comments} setComments={setComments}
           commentsCount={commentsCount} setCommentsCount={setCommentsCount} />
-        } </>
-      )
+        }
+      </>)
       }</>)
 }
 

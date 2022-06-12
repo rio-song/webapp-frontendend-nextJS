@@ -1,7 +1,7 @@
 import { Button, Modal, Form } from 'react-bootstrap'
-import { Login } from '../type/api';
+import { Login } from '../../lib/api';
 import { useState, useEffect, useRef } from 'react'
-import utilStyles from '../styles/utils.module.css'
+import utilStyles from '../../styles/utils.module.css'
 
 export default function LoginPage(props) {
 
@@ -14,16 +14,20 @@ export default function LoginPage(props) {
     const handleClose = () => {
         props.setLoginPopShow(false)
         setIsError(false)
+        setErrorContent("")
     };
     const handleResisterUser = () => {
         props.setLoginPopShow(false);
         props.setResisterUserPopShow(true);
+        setIsError(false)
+        setErrorContent("")
     }
     const [isEmailValidationError, setIsEmailValidationError] = useState<boolean>(false);
     const [isPWValidationError, setIsPWValidationError] = useState<boolean>(false);
 
     const loginValidationCheck = () => {
         setIsError(false)
+        setErrorContent("")
         setIsEmailValidationError(false)
         setIsPWValidationError(false)
 

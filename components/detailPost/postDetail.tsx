@@ -1,8 +1,8 @@
 import { Modal, Container, Row, Col } from 'react-bootstrap'
-import utilStyles from '../styles/utils.module.css'
-import utilStylesforDetail from '../styles/postDetail.module.css'
+import utilStyles from '../../styles/utils.module.css'
+import utilStylesforDetail from '../../styles/postDetail.module.css'
 import { FaRegComment } from "react-icons/fa";
-import { postFavo, deleteFavo, postComment, getComment } from '../type/api';
+import { postFavo, deleteFavo, postComment, getComment } from '../../lib/api';
 import React from 'react';
 import { AiFillHeart, AiOutlineHeart, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { MdImageNotSupported } from "react-icons/md";
@@ -10,12 +10,13 @@ import { BsThreeDots } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { Img } from 'react-image';
 import { IconContext } from "react-icons"
-import { DataChange } from '../type/util';
+import { DataChange } from '../../lib/util';
 import { useRef, useEffect, useState } from 'react';
 import CommentMenu from './commentMenu';
 import PostDetailMenu from './postDetailMenu';
 
 export default function PostDetail(props) {
+
     const [postCommentStatusCode, setPostCommentStatusCode] = useState();
     const [getCommentStatusCode, setGetCommentStatusCode] = useState();
     const [postCommentResult, setPostCommentResult] = useState();
@@ -242,13 +243,16 @@ export default function PostDetail(props) {
                 commentId={commentId} loginStatus={props.loginStatus} postId={postId}
                 commentsCount={props.commentsCount} setCommentsCount={props.setCommentsCount}
                 tapIndex={props.tapIndex} comments={props.comments} setComments={props.setComments}
-                setOverlay={setOverlay} />
-            <PostDetailMenu postMenuShow={postMenuShow}
+                setOverlay={setOverlay}
+            />
+            <PostDetailMenu
+                postMenuShow={postMenuShow}
                 setPostMenuShow={setPostMenuShow} postId={postId}
                 loginStatus={props.loginStatus} tapIndex={props.tapIndex}
                 topRefresh={props.topRefresh} setTopRefresh={props.setTopRefresh}
                 setPostDetailShow={props.setPostDetailShow}
-                setOverlay={setOverlay} />
+                setOverlay={setOverlay}
+            />
         </>
     );
 }

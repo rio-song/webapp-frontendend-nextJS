@@ -1,8 +1,8 @@
 import { Button, Modal, Form } from 'react-bootstrap'
-import { putUser } from '../type/api'
+import { putUser } from '../../lib/api'
 import { useState, useEffect, useRef } from 'react'
-import utilStyles from '../styles/utils.module.css'
-import navbar from '../styles/navbar.module.css'
+import navbar from '../../styles/navbar.module.css'
+import utilStyles from '../../styles/utils.module.css'
 
 export default function EditProfile(props) {
     const show = props.editProfilePopShow;
