@@ -1,3 +1,7 @@
+
+// const domain = "http://localhost:8000"
+const domain = "http://10.0.3.97"
+
 export async function registerUserInfo(familyName, firstName, nickName, email, password, setStatusCode) {
 
     var SHA256 = require("crypto-js/sha256");
@@ -11,7 +15,7 @@ export async function registerUserInfo(familyName, firstName, nickName, email, p
     params.append('email', email)
     params.append('password', hash)
 
-    const url = "http://localhost:8000/api/user";
+    const url = domain + "/api/user";
 
     const request = {
         method: "POST",
@@ -41,7 +45,7 @@ export async function Login(email, password, setStatusCode) {
     params.append('email', email)
     params.append('password', hash)
 
-    const url = "http://localhost:8000/api/login";
+    const url = domain + "/api/login";
 
     const request = {
         method: "POST",
@@ -66,7 +70,7 @@ export async function Login(email, password, setStatusCode) {
 }
 
 export async function Logout() {
-    const url = "http://localhost:8000/api/logout";
+    const url = domain + "/api/logout";
 
     const request = {
         method: "POST",
@@ -83,7 +87,7 @@ export async function Logout() {
 
 
 export async function getPosts(setStatusCode) {
-    const url = "http://localhost:8000/api/post/userId/null?count=5&lastPostId=null";
+    const url = domain + "/api/post/userId/null?count=5&lastPostId=null";
     const params = {
         method: "GET",
         headers: {
@@ -106,7 +110,7 @@ export async function getPosts(setStatusCode) {
 export async function getPostsLogin(setStatusCode) {
     const userId = localStorage.getItem('userId')
 
-    const url = "http://localhost:8000/api/post/userId/" + userId + "?count=5&lastPostId=null";
+    const url = domain + "/api/post/userId/" + userId + "?count=5&lastPostId=null";
     const params = {
         method: "GET",
         headers: {
@@ -128,7 +132,7 @@ export async function getPostsLogin(setStatusCode) {
 }
 
 export async function getUserAllPosts(userId, setStatusCode) {
-    const url = "http://localhost:8000/api/post/user/userId/" + userId + "?count=5&lastPostId=null";
+    const url = domain + "/api/post/user/userId/" + userId + "?count=5&lastPostId=null";
 
     const params = {
         method: "GET",
@@ -152,7 +156,7 @@ export async function getUserAllPosts(userId, setStatusCode) {
 export async function getPostDetail(id, setStatusCode) {
     const userId = localStorage.getItem('userId')
 
-    const url = "http://localhost:8000/api/post/postId/" + id + "/userId/" + userId;
+    const url = domain + "/api/post/postId/" + id + "/userId/" + userId;
     const params = {
         method: "GET",
         headers: {
@@ -172,7 +176,7 @@ export async function getPostDetail(id, setStatusCode) {
 }
 export async function deletePost(postId, setStatusCode) {
 
-    const url = "http://localhost:8000/api/post/postId/" + postId;
+    const url = domain + "/api/post/postId/" + postId;
 
     const request = {
         method: "DELETE",
@@ -201,7 +205,7 @@ export async function PostImage(_imgUrl, _title, _comment, setStatusCode) {
     params.append('text', _comment)
 
     const userId = localStorage.getItem('userId')
-    const url = "http://localhost:8000/api/post/userId/" + userId;
+    const url = domain + "/api/post/userId/" + userId;
 
     const request = {
         method: "POST",
@@ -225,7 +229,7 @@ export async function PostImage(_imgUrl, _title, _comment, setStatusCode) {
 
 export async function postFavo(id) {
     const userId = localStorage.getItem('userId')
-    const url = "http://localhost:8000/api/favo/postId/" + id + "/userId/" + userId;
+    const url = domain + "/api/favo/postId/" + id + "/userId/" + userId;
 
     const request = {
         method: "POST",
@@ -244,7 +248,7 @@ export async function postFavo(id) {
 export async function deleteFavo(id) {
 
     const userId = localStorage.getItem('userId')
-    const url = "http://localhost:8000/api/favo/postId/" + id + "/userId/" + userId;
+    const url = domain + "/api/favo/postId/" + id + "/userId/" + userId;
 
     const request = {
         method: "DELETE",
@@ -262,7 +266,7 @@ export async function deleteFavo(id) {
 
 export async function getComment(id, setStatusCode) {
 
-    const url = "http://localhost:8000/api/comment/postId/" + id;
+    const url = domain + "/api/comment/postId/" + id;
     const params = {
         method: "GET",
         headers: {
@@ -284,7 +288,7 @@ export async function getComment(id, setStatusCode) {
 export async function postComment(id, comment, setPostCommentStatusCode) {
 
     const userId = localStorage.getItem('userId')
-    const url = "http://localhost:8000/api/comment/postId/" + id + "/userId/" + userId;
+    const url = domain + "/api/comment/postId/" + id + "/userId/" + userId;
 
     const params = new URLSearchParams()
     params.append('comment', comment)
@@ -312,7 +316,7 @@ export async function postComment(id, comment, setPostCommentStatusCode) {
 // export async function putComment(id, commentId, comment, setStatusCode) {
 
 //     const userId = localStorage.getItem('userId')
-//     const url = "http://localhost:8000/api/favo/postId/" + id + "/userId/" + userId + "/commentId/" + commentId;
+//     const url = domain + "/api/favo/postId/" + id + "/userId/" + userId + "/commentId/" + commentId;
 
 //     const params = new URLSearchParams()
 //     params.append('comment', comment)
@@ -339,7 +343,7 @@ export async function postComment(id, comment, setPostCommentStatusCode) {
 
 export async function deleteComment(commentId, setDeleteStatusCode) {
 
-    const url = "http://localhost:8000/api/comment/commentId/" + commentId;
+    const url = domain + "/api/comment/commentId/" + commentId;
 
     const request = {
         method: "DELETE",
@@ -363,7 +367,7 @@ export async function deleteComment(commentId, setDeleteStatusCode) {
 export async function getUser(setStatusCode) {
 
     const userId = localStorage.getItem('userId')
-    const url = "http://localhost:8000/api/user/userId/" + userId;
+    const url = domain + "/api/user/userId/" + userId;
     const params = {
         method: "GET",
         headers: {
@@ -388,7 +392,7 @@ export async function putUser(familyName, firstName, nickName, imageUrl, email, 
     const hash = SHA256(password).toString();
 
     const userId = localStorage.getItem('userId')
-    const url = "http://localhost:8000/api/user/userId/" + userId;
+    const url = domain + "/api/user/userId/" + userId;
 
     const params = new URLSearchParams()
     params.append('firstName', firstName)
