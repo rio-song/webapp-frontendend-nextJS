@@ -1,5 +1,5 @@
-import utilStyles from '../styles/utils.module.css'
-import userPost from '../styles/userPost.module.css'
+import utilStyles from '../../styles/utils.module.css'
+import userPost from '../../styles/userPost.module.css'
 import { CgProfile } from "react-icons/cg";
 import { Img } from 'react-image';
 import { IconContext } from "react-icons"
@@ -7,7 +7,7 @@ import { Row, Col } from 'react-bootstrap'
 
 export default function UserPostsTop(props) {
 
-  const json = props.result.Post[0];
+  const json = props.result.Post[0]
 
   return (
     <div className={userPost.detailPostTop}>

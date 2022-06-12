@@ -1,9 +1,9 @@
-import utilStyles from '../styles/utils.module.css'
-import userPost from '../styles/userPost.module.css'
+import utilStyles from '../../styles/utils.module.css'
+import userPost from '../../styles/userPost.module.css'
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { MdImageNotSupported } from "react-icons/md";
 import { useState, useEffect } from 'react';
-import { getPostDetail } from '../type/api';
+import { getPostDetail } from '../../lib/api';
 import React from 'react';
 import { Img } from 'react-image';
 import { IconContext } from "react-icons"
@@ -11,7 +11,6 @@ import { Card } from 'react-bootstrap'
 
 export default function PostByUser(props) {
     const json = props.result.Post;
-
     const [statusCode, setStatusCode] = useState();
     const [isError, setIsError] = useState(false);
     const [errorContent, setErrorContent] = useState("");

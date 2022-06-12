@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react'
 import { FiPlusSquare } from 'react-icons/fi';
 import { BsFillHouseDoorFill } from 'react-icons/bs';
 import { Navbar, Container, NavDropdown } from 'react-bootstrap'
-import ViewProfile from "./viewProfile"
-import RegisterPostImage from './registerPostImage'
-import LoginPage from './loginPage'
-import ResisterUser from './registerUser'
+import ViewProfile from "../components/navBar/viewProfile"
+import RegisterPostImage from '../components/navBar/registerPostImage'
+import LoginPage from '../components/navBar/loginPage'
+import ResisterUser from '../components/navBar/registerUser'
 import { CgProfile } from "react-icons/cg";
 import { IconContext } from "react-icons"
-import { getUser, Logout } from '../type/api';
+import { getUser, Logout } from '../lib/api';
 import { useRouter } from 'next/router';
 import navbar from '../styles/navbar.module.css'
 

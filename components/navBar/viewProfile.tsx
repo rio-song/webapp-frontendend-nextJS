@@ -1,5 +1,5 @@
 import { Button, Modal } from 'react-bootstrap'
-import utilStyles from '../styles/utils.module.css'
+import utilStyles from '../../styles/utils.module.css'
 import EditProfile from './editProfile'
 import { useState } from 'react'
 

@@ -1,12 +1,12 @@
 import Layout from '../components/layout'
 import NestedLayout from '../components/layout'
 import userPost from '../styles/userPost.module.css'
-import { getUserAllPosts } from '../type/api'
+import { getUserAllPosts } from '../lib/api'
 import { useState, useEffect } from 'react'
-import PostByUser from './postByUser'
-import PostDetail from './postDetail'
+import PostByUser from '../components/userPost/postByUser'
+import PostDetail from '../components/detailPost/postDetail'
 import { useRouter } from 'next/router';
-import UserPostsTop from './userPostsTop'
+import UserPostsTop from '../components/userPost/userPostsTop'
 
 export default function UserPosts(props) {
 
