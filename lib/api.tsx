@@ -1,6 +1,6 @@
 
 // const domain = "http://localhost:8000"
-const domain = "https://www.rioswebapp.tk"
+const domain = "https://api.rioswebapp.tk"
 
 export async function registerUserInfo(familyName, firstName, nickName, email, password, setStatusCode) {
 
