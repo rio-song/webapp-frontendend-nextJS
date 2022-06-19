@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { PostImage } from '../../lib/api';
 import navbar from '../../styles/navbar.module.css'
 import utilStyles from '../../styles/utils.module.css'
+import { ImageChangeDataUrl } from '../../lib/util';
 
 export default function RegisterPostImage(props) {
 
@@ -69,10 +70,11 @@ export default function RegisterPostImage(props) {
     //Imgの投稿
     const titleRef = useRef(null);
     const commentRef = useRef(null);
+    const imgDataUrl = ImageChangeDataUrl(preview)
 
     const getPostInfo = () => {
         async function fetchData() {
-            const result = await PostImage(preview, titleRef.current.value, commentRef.current.value, setStatusCode);
+            const result = await PostImage(imgDataUrl, titleRef.current.value, commentRef.current.value, setStatusCode);
             setResult(result)
         }
         fetchData()
