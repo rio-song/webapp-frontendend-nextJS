@@ -3,6 +3,7 @@ import { putUser } from '../../lib/api'
 import { useState, useEffect, useRef } from 'react'
 import navbar from '../../styles/navbar.module.css'
 import utilStyles from '../../styles/utils.module.css'
+import { ImageChangeDataUrl } from '../../lib/util'
 
 export default function EditProfile(props) {
     const show = props.editProfilePopShow;
@@ -84,8 +85,10 @@ export default function EditProfile(props) {
     }
 
     const hundlePutUser = () => {
+
+        const imgDataUrl = ImageChangeDataUrl(preview)
         async function fetchData() {
-            const result = await putUser(familyNameRef.current.value, firstNameRef.current.value, nickNameRef.current.value, preview,
+            const result = await putUser(familyNameRef.current.value, firstNameRef.current.value, nickNameRef.current.value, imgDataUrl,
                 emailRef.current.value, profileTextRef.current.value, profileTextRef.current.value, setStatusCode);
             setResult(result);
         }

@@ -15,5 +15,15 @@ export function DataChange(data) {
     } else {
         return "数秒前"
     }
+}
 
+export function ImageChangeDataUrl(data) {
+
+    var fileReader = new FileReader();
+
+    fileReader.onload = function () {
+        var dataURI = this.result;
+    }
+
+    fileReader.readAsDataURL(data);
 }
