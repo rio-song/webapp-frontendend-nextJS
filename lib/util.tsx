@@ -17,13 +17,8 @@ export function DataChange(data) {
     }
 }
 
-export function ImageChangeDataUrl(data) {
-
-    var fileReader = new FileReader();
-
-    fileReader.onload = function () {
-        var dataURI = this.result;
-    }
-
-    fileReader.readAsDataURL(data);
+export async function ImageChangeDataUrl(data) {
+    let files = data.target.files;
+    let reader = new FileReader();
+    reader.readAsDataURL(files[0]);
 }

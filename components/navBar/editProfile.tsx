@@ -36,6 +36,7 @@ export default function EditProfile(props) {
 
     const [showImg, setShow] = useState(false);
     const [preview, setPreview] = useState(json.imageUrl);
+    let imgDataUrl;
 
     const hundlePutUserValidationCheck = () => {
 
@@ -84,9 +85,14 @@ export default function EditProfile(props) {
         }
     }
 
-    const hundlePutUser = () => {
+    const handleChangeFile = (e) => {
+        setShow(true);
+        const { files } = e.target;
+        setPreview(window.URL.createObjectURL(files[0]));
+        imgDataUrl = ImageChangeDataUrl(e)
+    };
 
-        const imgDataUrl = ImageChangeDataUrl(preview)
+    const hundlePutUser = () => {
         async function fetchData() {
             const result = await putUser(familyNameRef.current.value, firstNameRef.current.value, nickNameRef.current.value, imgDataUrl,
                 emailRef.current.value, profileTextRef.current.value, profileTextRef.current.value, setStatusCode);
@@ -109,12 +115,6 @@ export default function EditProfile(props) {
             setErrorContent(result);
         }
     }, [statusCode, result])
-
-    const handleChangeFile = (e) => {
-        setShow(true);
-        const { files } = e.target;
-        setPreview(window.URL.createObjectURL(files[0]));
-    };
 
     const handleClose = () => {
         props.setEditProfilePopShow(false)
