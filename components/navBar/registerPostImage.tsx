@@ -19,6 +19,7 @@ export default function RegisterPostImage(props) {
     const [isTitleValidationError, setTitleIsValidationError] = useState<boolean>(false);
 
     const [isCommentValidationError, setIsCommentValidationError] = useState<boolean>(false);
+    let imgDataUrl;
     const registerPostValidationCheck = () => {
 
         setTitleIsValidationError(false)
@@ -57,6 +58,7 @@ export default function RegisterPostImage(props) {
         setShow(true);
         const { files } = e.target;
         setPreview(window.URL.createObjectURL(files[0]));
+        imgDataUrl = ImageChangeDataUrl(e)
     };
     const handleChangeFileAgain = () => {
         setShow(false);
@@ -70,7 +72,6 @@ export default function RegisterPostImage(props) {
     //Imgの投稿
     const titleRef = useRef(null);
     const commentRef = useRef(null);
-    const imgDataUrl = ImageChangeDataUrl(preview)
 
     const getPostInfo = () => {
         async function fetchData() {
