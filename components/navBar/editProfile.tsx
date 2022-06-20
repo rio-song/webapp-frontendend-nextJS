@@ -3,7 +3,7 @@ import { putUser } from '../../lib/api'
 import { useState, useEffect, useRef } from 'react'
 import navbar from '../../styles/navbar.module.css'
 import utilStyles from '../../styles/utils.module.css'
-import { ImageChangeDataUrl } from '../../lib/util'
+import { fileListToBase64 } from '../../lib/util';
 
 export default function EditProfile(props) {
     const show = props.editProfilePopShow;
@@ -36,7 +36,7 @@ export default function EditProfile(props) {
 
     const [showImg, setShow] = useState(false);
     const [preview, setPreview] = useState(json.imageUrl);
-    let imgDataUrl;
+    const [imgDataUrl, setImgDataUrl] = useState();
 
     const hundlePutUserValidationCheck = () => {
 
@@ -88,8 +88,13 @@ export default function EditProfile(props) {
     const handleChangeFile = (e) => {
         setShow(true);
         const { files } = e.target;
-        setPreview(window.URL.createObjectURL(files[0]));
-        imgDataUrl = ImageChangeDataUrl(e)
+        const image = window.URL.createObjectURL(files[0])
+        setPreview(image);
+        async function fetchData() {
+            const imgDataUrl = await fileListToBase64(files)
+            setImgDataUrl(imgDataUrl[0])
+        }
+        fetchData()
     };
 
     const hundlePutUser = () => {
