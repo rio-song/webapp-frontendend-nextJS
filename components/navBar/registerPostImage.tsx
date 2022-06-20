@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { PostImage } from '../../lib/api';
 import navbar from '../../styles/navbar.module.css'
 import utilStyles from '../../styles/utils.module.css'
-import { ImageChangeDataUrl } from '../../lib/util';
+import { fileListToBase64 } from '../../lib/util';
 
 export default function RegisterPostImage(props) {
 
@@ -19,7 +19,8 @@ export default function RegisterPostImage(props) {
     const [isTitleValidationError, setTitleIsValidationError] = useState<boolean>(false);
 
     const [isCommentValidationError, setIsCommentValidationError] = useState<boolean>(false);
-    let imgDataUrl;
+    const [imgDataUrl, setImgDataUrl] = useState();
+
     const registerPostValidationCheck = () => {
 
         setTitleIsValidationError(false)
@@ -57,9 +58,15 @@ export default function RegisterPostImage(props) {
     const handleChangeFile = (e) => {
         setShow(true);
         const { files } = e.target;
-        setPreview(window.URL.createObjectURL(files[0]));
-        imgDataUrl = ImageChangeDataUrl(e)
-    };
+        const image = window.URL.createObjectURL(files[0])
+        setPreview(image);
+        async function fetchData() {
+            const imgDataUrl = await fileListToBase64(files)
+            setImgDataUrl(imgDataUrl[0])
+        }
+        fetchData()
+    }
+
     const handleChangeFileAgain = () => {
         setShow(false);
         setPreview('');
