@@ -15,6 +15,7 @@ import { useRef, useEffect, useState } from 'react';
 import CommentMenu from './commentMenu';
 import PostDetailMenu from './postDetailMenu';
 
+
 export default function PostDetail(props) {
 
     const [postCommentStatusCode, setPostCommentStatusCode] = useState();
@@ -141,7 +142,7 @@ export default function PostDetail(props) {
                             <Col xs={12} md={8} className={utilStylesforDetail.detailContent1}>
                                 <div className={utilStylesforDetail.postImageArea2}>
                                     <IconContext.Provider value={{ size: '50px' }}>
-                                        <Img src={json.imageUrl} className={utilStylesforDetail.postImageArea2}
+                                        <Img src={json.imageUrl}
                                             loader={<AiOutlineLoading3Quarters className={utilStylesforDetail.postImage} />}
                                             unloader={<MdImageNotSupported className={utilStylesforDetail.postImage} />} />
                                     </IconContext.Provider >
@@ -151,7 +152,9 @@ export default function PostDetail(props) {
                                 <div className={utilStylesforDetail.detailUserInfo} >
                                     <span className={utilStylesforDetail.icon}>
                                         <IconContext.Provider value={{ color: '#262626', size: '30px' }}>
-                                            <Img src={json.userImageUrl}
+                                            <Img
+                                                className={utilStylesforDetail.userImageUrl}
+                                                src={json.userImageUrl}
                                                 loader={<CgProfile />}
                                                 unloader={<CgProfile />} />
                                         </IconContext.Provider >
@@ -166,7 +169,9 @@ export default function PostDetail(props) {
                                     <div className={utilStylesforDetail.comment}>
                                         <span className={utilStylesforDetail.icon}>
                                             <IconContext.Provider value={{ color: '#262626', size: '30px' }}>
-                                                <Img src={json.userImageUrl}
+                                                <Img
+                                                    className={utilStylesforDetail.userImageUrl}
+                                                    src={json.userImageUrl}
                                                     loader={<CgProfile />}
                                                     unloader={<CgProfile />} />
                                             </IconContext.Provider >
@@ -185,7 +190,9 @@ export default function PostDetail(props) {
                                                     <div className={utilStylesforDetail.comment}>
                                                         <span className={utilStylesforDetail.icon}>
                                                             <IconContext.Provider value={{ color: '#262626', size: '30px' }}>
-                                                                <Img src={json.commentedUserImageUrl}
+                                                                <Img
+                                                                    className={utilStylesforDetail.userImageUrl}
+                                                                    src={json.commentedUserImageUrl}
                                                                     loader={<CgProfile />}
                                                                     unloader={<CgProfile />} />
                                                             </IconContext.Provider >

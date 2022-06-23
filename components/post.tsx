@@ -77,12 +77,11 @@ export default function Post(props) {
         json.map(post => (
           <Card className={utilStyles.postList}>
             <span onClick={() => props.handlePagePostByUser(post.userId)} className={utilStyles.userArea}>
-              <span className={utilStyles.icon}>
-                <Img src={post.userImageUrl}
-                  loader={<CgProfile />}
-                  unloader={<CgProfile />} />
-              </span>
-              <span className={utilStyles.text3}>
+              <Img className={utilStyles.userImageUrl}
+                src={post.userImageUrl}
+                loader={<CgProfile />}
+                unloader={<CgProfile />} />
+              <span className={utilStyles.textUserName}>
                 {post.nickName}
               </span>
             </span>

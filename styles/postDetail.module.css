@@ -1,12 +1,12 @@
 
 .detailContent1{
-  height: 90vh;
+  /* height: 90vh; */
   padding:0;
 }
 
 .detailContent2{
   padding:0;
-    height: 90vh;
+    /* height: 90vh; */
 }
 .detailUserInfo{
   margin: 10px 0px 0px;
@@ -68,6 +68,11 @@
   height: 100%;
 }
 
+.postImageArea2{
+  background: #F2F2F2;
+  height: 100%;
+  width: 100%;
+}
 .postImageArea2{
   background: #F2F2F2;
   height: 100%;
@@ -169,3 +174,10 @@
     justify-content: center;
   
   }
+
+  .userImageUrl{
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    }
+    

@@ -133,9 +133,31 @@
   padding-bottom:7px ;
   margin-left: 10px;
   cursor: pointer; 
+  display: flex;
+  align-items: center;
 }
 .navIcons{
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.userImageUrl{
+height: 35px;
+width: 35px;
+border-radius: 50%;
+}
+
+.userImageUrlTop{
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  }
+
+.textUserName{
+  color: #262626;
+  font-size: 14px;
+  font-weight: bold;
+  font:BlinkMacSystemFont;
+  margin-left: 10px;
 }

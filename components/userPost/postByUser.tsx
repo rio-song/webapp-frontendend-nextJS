@@ -46,17 +46,20 @@ export default function PostByUser(props) {
         <li className={userPost.listItem}>
             {json.map(post => (
                 <Card className={userPost.postImageAreabyUser}>
-                    <Card.Body onClick={() => handlePostDetailShow(post.id, json.indexOf(post))}
-                        className={utilStyles.navIcons}>
-                        <IconContext.Provider value={{ size: '50px' }}>
-                            <Img src={post.imageUrl}
-                                loader={<AiOutlineLoading3Quarters />}
-                                unloader={<MdImageNotSupported />} />
-                        </IconContext.Provider>
+                    {/* <Card.Body onClick={() => handlePostDetailShow(post.id, json.indexOf(post))}
+                        className={utilStyles.navIcons}> */}
+                    <IconContext.Provider value={{ size: '50px' }}>
+                        <Img onClick={() => handlePostDetailShow(post.id, json.indexOf(post))}
+                            className={userPost.postImg}
+                            src={post.imageUrl}
+                            loader={<AiOutlineLoading3Quarters />}
+                            unloader={<MdImageNotSupported />} />
+                    </IconContext.Provider>
 
-                    </Card.Body>
+                    {/* </Card.Body> */}
                 </Card>
-            ))}
+            ))
+            }
         </ li >
     )
 }
