@@ -16,7 +16,9 @@ export default function UserPostsTop(props) {
           <div>
             <span className={utilStyles.navIcons}>
               <IconContext.Provider value={{ size: '150px' }}>
-                <Img src={json.userImageUrl}
+                <Img
+                  className={utilStyles.userImageUrlTop}
+                  src={json.userImageUrl}
                   loader={<CgProfile />}
                   unloader={<CgProfile />} />
               </IconContext.Provider >

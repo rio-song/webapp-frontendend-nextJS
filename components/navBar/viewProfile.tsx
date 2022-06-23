@@ -2,6 +2,9 @@ import { Button, Modal } from 'react-bootstrap'
 import utilStyles from '../../styles/utils.module.css'
 import EditProfile from './editProfile'
 import { useState } from 'react'
+import { Img } from 'react-image';
+import navbar from '../../styles/navbar.module.css'
+
 
 export default function ViewProfile(props) {
     const [editProfilePopShow, setEditProfilePopShow] = useState(false);
@@ -27,7 +30,7 @@ export default function ViewProfile(props) {
                     <div className={utilStyles.text5} >ニックネーム</div>
                     <span className={utilStyles.text7}>{json.nickName}</span>
                     <div className={utilStyles.text5} >プロフィール画像</div>
-                    <span className={utilStyles.text7}>{json.imageUrl}</span>
+                    <span><Img className={navbar.editProfileImageUrl} src={json.imageUrl} /></span>
                     <div className={utilStyles.text5} >自己紹介文</div>
                     <span className={utilStyles.text7}>{json.profileText}</span>
                     <div className={utilStyles.text5} >Email</div>

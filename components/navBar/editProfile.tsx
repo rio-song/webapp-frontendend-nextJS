@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import navbar from '../../styles/navbar.module.css'
 import utilStyles from '../../styles/utils.module.css'
 import { fileListToBase64 } from '../../lib/util';
+import { Img } from 'react-image';
 
 export default function EditProfile(props) {
     const show = props.editProfilePopShow;
@@ -192,7 +193,7 @@ export default function EditProfile(props) {
                         <Form.Label>プロフィール画像</Form.Label>
                         {showImg ? (<img src={preview} />
                         ) : (
-                            <div>{json.imageUrl}<div>
+                            <div><Img className={navbar.editProfileImageUrl} src={json.imageUrl} /><div>
                                 <label className={navbar.file}>
                                     写真を選択する
                                     <input

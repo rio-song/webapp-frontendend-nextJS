@@ -4,6 +4,7 @@ import { PostImage } from '../../lib/api';
 import navbar from '../../styles/navbar.module.css'
 import utilStyles from '../../styles/utils.module.css'
 import { fileListToBase64 } from '../../lib/util';
+//import { run } from '../../lib/s3';
 
 export default function RegisterPostImage(props) {
 
@@ -82,6 +83,7 @@ export default function RegisterPostImage(props) {
 
     const getPostInfo = () => {
         async function fetchData() {
+            //const imgUrl = await run(imgDataUrl)
             const result = await PostImage(imgDataUrl, titleRef.current.value, commentRef.current.value, setStatusCode);
             setResult(result)
         }

@@ -100,6 +100,8 @@ export async function getPosts(setStatusCode) {
     setStatusCode(statusCode);
     if ((statusCode === 200 || statusCode === 201) && body.Post.length > 0) {
         return body
+    } else if (statusCode === 503) {
+        return "サーバーが混雑しています。何回かリトライしてください。"
     } else if (body.length = 0) {
         return "投稿がありません"
     } else {
@@ -124,6 +126,8 @@ export async function getPostsLogin(setStatusCode) {
     setStatusCode(statusCode);
     if ((statusCode === 200 || statusCode === 201) && body.Post.length > 0) {
         return body
+    } else if (statusCode === 503) {
+        return "サーバーが混雑しています。何回かリトライしてください。"
     } else if (body.length = 0) {
         return "投稿がありません"
     } else {
@@ -147,6 +151,8 @@ export async function getUserAllPosts(userId, setStatusCode) {
     setStatusCode(statusCode);
     if ((statusCode === 200 || statusCode === 201) && body.Post.length > 0) {
         return body
+    } else if (statusCode === 503) {
+        return "サーバーが混雑しています。何回かリトライしてください。"
     } else if (body.length = 0) {
         return "投稿がありません"
     } else {
