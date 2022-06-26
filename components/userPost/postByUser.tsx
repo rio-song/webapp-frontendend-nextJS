@@ -18,6 +18,7 @@ export default function PostByUser(props) {
         props.setPostDetailShow(true);
         props.setTapIndex(indexNum)
         async function fetchData() {
+            props.setPostDetailResult(null);
             const postDetailResult = await getPostDetail(id, setStatusCode);
             props.setPostDetailResult(postDetailResult);
             if (postDetailResult != null && postDetailResult.PostDetail != null) {
