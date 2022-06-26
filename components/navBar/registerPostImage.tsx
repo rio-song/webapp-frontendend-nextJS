@@ -84,6 +84,7 @@ export default function RegisterPostImage(props) {
     const getPostInfo = () => {
         async function fetchData() {
             //const imgUrl = await run(imgDataUrl)
+            setResult(null)
             const result = await PostImage(imgDataUrl, titleRef.current.value, commentRef.current.value, setStatusCode);
             setResult(result)
         }

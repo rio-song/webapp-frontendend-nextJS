@@ -1,4 +1,3 @@
-import utilStyles from '../../styles/utils.module.css'
 import userPost from '../../styles/userPost.module.css'
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { MdImageNotSupported } from "react-icons/md";
@@ -46,8 +45,6 @@ export default function PostByUser(props) {
         <li className={userPost.listItem}>
             {json.map(post => (
                 <Card className={userPost.postImageAreabyUser}>
-                    {/* <Card.Body onClick={() => handlePostDetailShow(post.id, json.indexOf(post))}
-                        className={utilStyles.navIcons}> */}
                     <IconContext.Provider value={{ size: '50px' }}>
                         <Img onClick={() => handlePostDetailShow(post.id, json.indexOf(post))}
                             className={userPost.postImg}
@@ -55,8 +52,6 @@ export default function PostByUser(props) {
                             loader={<AiOutlineLoading3Quarters />}
                             unloader={<MdImageNotSupported />} />
                     </IconContext.Provider>
-
-                    {/* </Card.Body> */}
                 </Card>
             ))
             }

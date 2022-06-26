@@ -86,6 +86,7 @@ export default function ResisterUser(props) {
     const registerUser = () => {
 
         async function fetchData() {
+            setResult(null)
             const result = await registerUserInfo(familyNameRef.current.value,
                 firstNameRef.current.value, nickNameRef.current.value,
                 emailRef.current.value, passwordRef.current.value, setStatusCode);
