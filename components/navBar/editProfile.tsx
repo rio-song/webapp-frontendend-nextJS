@@ -100,8 +100,9 @@ export default function EditProfile(props) {
 
     const hundlePutUser = () => {
         async function fetchData() {
+            setResult(null)
             const result = await putUser(familyNameRef.current.value, firstNameRef.current.value, nickNameRef.current.value, imgDataUrl,
-                emailRef.current.value, profileTextRef.current.value, profileTextRef.current.value, setStatusCode);
+                emailRef.current.value, passwordRef.current.value, profileTextRef.current.value, setStatusCode);
             setResult(result);
         }
         fetchData();

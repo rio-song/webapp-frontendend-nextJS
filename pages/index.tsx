@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 import PostDetail from '../components/detailPost/postDetail'
 import { getPosts, getPostsLogin } from '../lib/api'
 import { useRouter } from 'next/router';
-// import { usePost, usePostDetail } from '../hooks/post'
+
 
 export default function Home(props) {
 
@@ -43,9 +43,11 @@ export default function Home(props) {
 
       let res
       if (token !== null) {
+        setPostResult(null);
         res = await getPostsLogin(setStatusCode);
         setPostResult(res);
       } else {
+        setPostResult(null);
         res = await getPosts(setStatusCode);
         setPostResult(res);
       }

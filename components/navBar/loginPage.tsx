@@ -51,6 +51,7 @@ export default function LoginPage(props) {
 
     const login = () => {
         async function fetchData() {
+            setResult(null)
             const result = await Login(emailRef.current.value, passwordRef.current.value, setStatusCode);
             setResult(result);
         }
