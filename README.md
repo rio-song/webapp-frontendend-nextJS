@@ -1,9 +1,14 @@
-This is a starter template for [Learn Next.js](https://nextjs.org/learn).
 
+## 構成
+- Node.js(v18.0.0)
+- ライブラリ：react(v17.0.2)
+- フレームワーク : [Next.js](https://nextjs.org/)(最新版)
+- デザインのフレームワーク：[react-bootstrap](https://react-bootstrap.github.io/) (v2.3.1)
+- アイコン： [react-icons](https://react-icons.github.io/react-icons/) (v4.3.1)
 
-## Description
+## 設計書
+https://www.notion.so/8a50cb6d25c144df92c897d69c057ed6
 
-[Nest](https://github.com/nestjs/nest) frameworkを使用して作成
 
 ## Installation
 
@@ -23,13 +28,3 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
-
-## 構成
-Node.js(v18.0.0)
-ライブラリ：react(v17.0.2)
-フレームワーク : [Next.js](https://nextjs.org/)(最新版)
-デザインのフレームワーク：[react-bootstrap](https://react-bootstrap.github.io/) (v2.3.1)
-アイコン： [react-icons](https://react-icons.github.io/react-icons/) (v4.3.1)
-
-## 設計書
-https://www.notion.so/8a50cb6d25c144df92c897d69c057ed6
